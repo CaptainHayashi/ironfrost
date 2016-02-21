@@ -8,6 +8,8 @@ namespace ironfrost
 {
     public class BifrostClient
     {
+        public delegate Task RespondAsync(List<string> command);
+
         private System.Net.Sockets.TcpClient client;
         private System.Net.Sockets.NetworkStream stream;
         private byte[] buffer;

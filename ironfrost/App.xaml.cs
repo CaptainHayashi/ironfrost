@@ -31,7 +31,7 @@ namespace ironfrost
                 throw;
             }
 
-            var wnd = new MainWindow();
+            var wnd = new MainWindow(bc.WriteAsync);
 
             Func<Task> loop = async () =>
             {

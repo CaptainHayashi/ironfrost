@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <DataGrid x:Name="msgGrid" AutoGenerateColumns="False" ItemsSource="{Binding Msgs}">
+        <DataGrid x:Name="msgGrid" AutoGenerateColumns="False" ItemsSource="{Binding Msgs}" Margin="0,0,0,20">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Tag}" ClipboardContentBinding="{x:Null}" Header="Tag"/>
                 <DataGridTextColumn Binding="{Binding Word}" ClipboardContentBinding="{x:Null}" Header="Command"/>
@@ -33,5 +33,12 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <Button x:Name="btnLoad" Content="Load" Padding="20,0" UseLayoutRounding="True" HorizontalContentAlignment="Center" Click="btnLoad_Click"/>
+            <Button x:Name="btnEject" Content="Eject" Padding="20,0" UseLayoutRounding="True" HorizontalContentAlignment="Center" Click="btnEject_Click"/>
+            <Button x:Name="btnPlay" Content="Play" Padding="20,0" UseLayoutRounding="True" HorizontalContentAlignment="Center" Click="btnPlay_Click"/>
+            <Button x:Name="btnStop" Content="Stop" Padding="20,0" UseLayoutRounding="True" HorizontalContentAlignment="Center" Click="btnStop_Click"/>
+            <Button x:Name="btnEnd" Content="End" Padding="20,0" UseLayoutRounding="True" HorizontalContentAlignment="Center" Click="btnEnd_Click"/>
+        </StackPanel>
     </Grid>
 </Window>
