@@ -8,25 +8,23 @@ namespace ironfrost
 {
     public class Tokeniser
     {
-        enum QuoteType
-        {
-            None,
-            Single,
-            Double
-        }
-
-        private bool escapeNext = false;
         private bool inWord = false;
-        private QuoteType quoteType = QuoteType.None;
+
+        private delegate void ByteProcessor(byte b);
+        private ByteProcessor processByte;
 
         List<List<List<byte>>> currentLines = new List<List<List<byte>>>();
         List<List<byte>> currentLine = new List<List<byte>>();
         List<byte> currentWord = new List<byte>();
 
+        public Tokeniser()
+        {
+            processByte = ProcessUnquotedByte;
+        }
+
         private void PushByte(byte b)
         {
             inWord = true;
-            escapeNext = false;
             currentWord.Add(b);
         }
 
@@ -50,67 +48,75 @@ namespace ironfrost
             currentLine.Clear();
         }
 
+        private void ProcessUnquotedByte(byte r)
+        {
+            if ('\n' == r)
+            {
+                PushLine();
+            }
+            else if ('\'' == r)
+            {
+                inWord = true;
+                processByte = ProcessSQuotedByte;
+            }
+            else if ('\"' == r)
+            {
+                inWord = true;
+                processByte = ProcessDQuotedByte;
+            }
+            else if ('\\' == r)
+            {
+                EscapeNextByte();
+            }
+            else if (char.IsWhiteSpace((char) r))
+            {
+                PushWord();
+            }
+            else
+            {
+                PushByte(r);
+            }
+        }
+
+        private void ProcessSQuotedByte(byte r)
+        {
+            if ('\'' == r)
+            {
+                processByte = ProcessUnquotedByte;
+            }
+            else
+            {
+                PushByte(r);
+            }
+        }
+
+        private void ProcessDQuotedByte(byte r)
+        {
+            if ('\"' == r)
+            {
+                processByte = ProcessUnquotedByte;
+            }
+            else if ('\\' == r)
+            {
+                EscapeNextByte();
+            }
+            else
+            {
+                PushByte(r);
+            }
+        }
+
+        private void EscapeNextByte()
+        {
+            var eb = processByte;
+            processByte = (r) => { PushByte(r); processByte = eb; };
+        }
+
         public List<List<string>> Feed(IEnumerable<byte> raw)
         {
             foreach (byte r in raw)
             {
-                char c = (char) r;
-
-                if (escapeNext)
-                {
-                    PushByte(r);
-                    continue;
-                }
-
-                switch (quoteType)
-                {
-                    case QuoteType.Single:
-                        if ('\'' == c)
-                        {
-                            quoteType = QuoteType.None;
-                        }
-                        else
-                        {
-                            PushByte(r);
-                        }
-                        break;
-                    case QuoteType.Double:
-                        if ('\"' == c)
-                        {
-                            quoteType = QuoteType.None;
-                        }
-                        else if ('\\' == c)
-                        {
-                            escapeNext = true;
-                        }
-                        else
-                        {
-                            PushByte(r);
-                        }
-                        break;
-                    case QuoteType.None:
-                        if ('\n' == c)
-                        {
-                            PushLine();
-                        }
-                        else if ('\'' == c || '\"' == c)
-                        {
-                            inWord = true;
-                            quoteType = '\'' == c ? QuoteType.Single : QuoteType.Double;
-                        }
-                        else if ('\\' == c)
-                        {
-                            escapeNext = true;
-                        }
-                        else if (char.IsWhiteSpace(c))
-                        {
-                            PushWord();
-                        } else
-                        {
-                            PushByte(r);
-                        }
-                        break;
-                }
+                processByte(r);
             }
 
             List<List<string>> lines = new List<List<string>>();
