@@ -66,6 +66,7 @@
     <Compile Include="BifrostClient.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Tokeniser.cs" />
+    <Compile Include="Packer.cs" />
     <Compile Include="ClientWindow.xaml.cs">
       <DependentUpon>ClientWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ironfrost
@@ -35,9 +34,12 @@ namespace ironfrost
 
         public async Task WriteAsync(List<string> command)
         {
-            int count = 0;
-            byte[] packed = tok.Pack(command, out count);
-            await stream.WriteAsync(packed, 0, count);
+            using (var mbuf = new MemoryStream(1024)) {
+                var packer = new Packer(mbuf);
+                packer.Pack(command);
+                mbuf.Seek(0, SeekOrigin.Begin);
+                await mbuf.CopyToAsync(stream);
+            }
         }
     }
 }
