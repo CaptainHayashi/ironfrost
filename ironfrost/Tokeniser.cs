@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ironfrost
 {
@@ -10,7 +8,7 @@ namespace ironfrost
     {
         private bool inWord = false;
 
-        private delegate void ByteProcessor(byte b);
+        private delegate ByteProcessor ByteProcessor(byte b);
         private ByteProcessor processByte;
 
         List<List<List<byte>>> currentLines = new List<List<List<byte>>>();
@@ -48,7 +46,44 @@ namespace ironfrost
             currentLine.Clear();
         }
 
-        private void ProcessUnquotedByte(byte r)
+        /// <summary>
+        ///   Processes the byte <paramref name="r" />, in unquoted mode.
+        /// </summary>
+        /// <param name="r">
+        ///   The byte to process.
+        /// </param>
+        /// <returns>
+        ///   The method to use to process the next byte.
+        /// </returns>
+        /// <remarks>
+        ///   <para>
+        ///     Unquoted mode means that the byte is processed as follows:
+        ///     <list>
+        ///       <item>
+        ///         <description>
+        ///           if the byte is a newline, we end the current line
+        ///           and append it to the list of lines to output;
+        ///         </description>
+        ///         <description>
+        ///           if the byte is a single or double quote, we enter
+        ///           the respective quote mode;
+        ///         </description>
+        ///         <description>
+        ///           if the byte is a backslash, we prepare to output the
+        ///           next byte verbatim;
+        ///         </description>
+        ///         <description>
+        ///           if the byte is whitespace, we end the current word
+        ///           and append it to the current line;
+        ///         </description>
+        ///         <description>
+        ///           else, we add the byte to the current word.
+        ///         </description>
+        ///       </item>
+        ///     </list>
+        ///   </para>
+        /// </remarks>
+        private ByteProcessor ProcessUnquotedByte(byte r)
         {
             if ('\n' == r)
             {
@@ -57,66 +92,57 @@ namespace ironfrost
             else if ('\'' == r)
             {
                 inWord = true;
-                processByte = ProcessSQuotedByte;
+                return ProcessSQuotedByte;
             }
             else if ('\"' == r)
             {
                 inWord = true;
-                processByte = ProcessDQuotedByte;
+                return ProcessDQuotedByte;
             }
             else if ('\\' == r)
             {
-                EscapeNextByte();
+                return (s) => { PushByte(s); return processByte; };
             }
             else if (char.IsWhiteSpace((char) r))
             {
                 PushWord();
             }
-            else
-            {
-                PushByte(r);
-            }
+
+            PushByte(r);
+            return ProcessUnquotedByte;
         }
 
-        private void ProcessSQuotedByte(byte r)
+        private ByteProcessor ProcessSQuotedByte(byte r)
         {
             if ('\'' == r)
             {
-                processByte = ProcessUnquotedByte;
+                return ProcessUnquotedByte;
             }
-            else
-            {
-                PushByte(r);
-            }
+
+            PushByte(r);
+            return ProcessSQuotedByte;
         }
 
-        private void ProcessDQuotedByte(byte r)
+        private ByteProcessor ProcessDQuotedByte(byte r)
         {
             if ('\"' == r)
             {
-                processByte = ProcessUnquotedByte;
+                return ProcessUnquotedByte;
             }
             else if ('\\' == r)
             {
-                EscapeNextByte();
+                return (s) => { PushByte(s); return processByte; };
             }
-            else
-            {
-                PushByte(r);
-            }
-        }
 
-        private void EscapeNextByte()
-        {
-            var eb = processByte;
-            processByte = (r) => { PushByte(r); processByte = eb; };
+            PushByte(r);
+            return ProcessDQuotedByte;
         }
 
         public List<List<string>> Feed(IEnumerable<byte> raw)
         {
             foreach (byte r in raw)
             {
-                processByte(r);
+                processByte = processByte(r);
             }
 
             List<List<string>> lines = new List<List<string>>();
