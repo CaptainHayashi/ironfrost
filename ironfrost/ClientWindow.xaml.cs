@@ -1,28 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ironfrost
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ClientWindow : Window
     {
         private BifrostClient.RespondAsync respond;
 
+        public string ClientName { get; }
         public ObservableCollection<Message> Msgs { get; }
 
         public void NewMessage(Message msg)
@@ -30,9 +20,11 @@ namespace ironfrost
             Msgs.Add(msg);
         }
 
-        public MainWindow(BifrostClient.RespondAsync rs)
+        public ClientWindow(string name, BifrostClient.RespondAsync rs)
         {
             InitializeComponent();
+
+            ClientName = name;
             Msgs = new ObservableCollection<Message>();
             DataContext = this;
 

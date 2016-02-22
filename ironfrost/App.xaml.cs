@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -31,7 +27,7 @@ namespace ironfrost
                 throw;
             }
 
-            var wnd = new MainWindow(bc.WriteAsync);
+            var wnd = new ClientWindow(bc.Name, bc.WriteAsync);
 
             Func<Task> loop = async () =>
             {

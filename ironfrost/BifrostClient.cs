@@ -10,6 +10,8 @@ namespace ironfrost
     {
         public delegate Task RespondAsync(List<string> command);
 
+        public string Name { get; }
+
         private System.Net.Sockets.TcpClient client;
         private System.Net.Sockets.NetworkStream stream;
         private byte[] buffer;
@@ -17,6 +19,8 @@ namespace ironfrost
 
         public BifrostClient(string host, ushort port, Tokeniser tok)
         {
+            Name = $"{host}:{port}";
+
             client = new System.Net.Sockets.TcpClient(host, port);
             stream = client.GetStream();
             buffer = new byte[4096];
