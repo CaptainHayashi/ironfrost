@@ -4,10 +4,17 @@ using System.Text;
 
 namespace ironfrost
 {
+    /// <summary>
+    ///   A Bifrost protocol tokeniser.
+    /// </summary>
     public class Tokeniser
     {
         private bool inWord = false;
 
+        /// <summary>
+        ///   Delegate for functions that process one byte, and return
+        ///   the processor for the next byte.
+        /// </summary>
         private delegate ByteProcessor ByteProcessor(byte b);
         private ByteProcessor processByte;
 
@@ -15,6 +22,13 @@ namespace ironfrost
         List<List<byte>> currentLine = new List<List<byte>>();
         List<byte> currentWord = new List<byte>();
 
+        /// <summary>
+        ///   Constructs a new <c>Tokeniser</c>.
+        ///   <para>
+        ///     The new <c>Tokeniser</c> starts in unquoted mode, with no
+        ///     lines ready to output.
+        ///   </para>
+        /// </summary>
         public Tokeniser()
         {
             processByte = ProcessUnquotedByte;
