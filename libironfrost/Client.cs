@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ironfrost
 {
-    public class BifrostClient
+    public class Client
     {
         public delegate Task RespondAsync(List<string> command);
 
@@ -16,7 +16,7 @@ namespace ironfrost
         private byte[] buffer;
         private Tokeniser tok;
 
-        public BifrostClient(string host, ushort port, Tokeniser tok)
+        public Client(string host, ushort port, Tokeniser tok)
         {
             Name = $"{host}:{port}";
 

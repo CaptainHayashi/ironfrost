@@ -10,7 +10,7 @@ namespace ironfrost
     public partial class App : Application
     {
         private Tokeniser tok;
-        private BifrostClient bc;
+        private Client bc;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -19,7 +19,7 @@ namespace ironfrost
             tok = new Tokeniser();
             try
             {
-                bc = new BifrostClient("localhost", 1350, tok);
+                bc = new Client("localhost", 1350, tok);
             }
             catch (System.Net.Sockets.SocketException ex)
             {

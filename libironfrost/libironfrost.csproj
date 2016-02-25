@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BifrostClient.cs" />
+    <Compile Include="Client.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Packer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

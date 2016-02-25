@@ -10,7 +10,7 @@ namespace ironfrost
     /// </summary>
     public partial class ClientWindow : Window
     {
-        private BifrostClient.RespondAsync respond;
+        private Client.RespondAsync respond;
 
         public string ClientName { get; }
         public ObservableCollection<Message> Msgs { get; }
@@ -20,7 +20,7 @@ namespace ironfrost
             Msgs.Add(msg);
         }
 
-        public ClientWindow(string name, BifrostClient.RespondAsync rs)
+        public ClientWindow(string name, Client.RespondAsync rs)
         {
             InitializeComponent();
 
