@@ -63,10 +63,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BifrostClient.cs" />
-    <Compile Include="Message.cs" />
-    <Compile Include="Tokeniser.cs" />
-    <Compile Include="Packer.cs" />
     <Compile Include="ClientWindow.xaml.cs">
       <DependentUpon>ClientWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -98,6 +94,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\libironfrost\libironfrost.csproj">
+      <Project>{4b4fbe64-6587-4c21-9141-c8a885515ce6}</Project>
+      <Name>libironfrost</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
