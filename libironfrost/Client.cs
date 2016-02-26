@@ -34,7 +34,8 @@ namespace ironfrost
 
         public async Task WriteAsync(IEnumerable<string> command)
         {
-            using (var mbuf = new MemoryStream(1024)) {
+            using (var mbuf = new MemoryStream(1024))
+            {
                 var packer = new Packer(mbuf);
                 packer.Pack(command);
                 mbuf.Seek(0, SeekOrigin.Begin);

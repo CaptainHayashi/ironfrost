@@ -11,15 +11,16 @@ namespace ironfrost
     class Packer
     {
         private Stream ostream;
-        
-        public Packer(Stream os) {
+
+        public Packer(Stream os)
+        {
             ostream = os;
         }
-        
+
         public void Pack(IEnumerable<string> line)
         {
             PackWord(line.First());
-            
+
             foreach (var word in line.Skip(1))
             {
                 ostream.WriteByte((byte)' ');
@@ -57,7 +58,8 @@ namespace ironfrost
                     ibuf.WriteByte((byte)'\\');
                     ibuf.WriteByte((byte)'\'');
                     ibuf.WriteByte((byte)'\'');
-                } else
+                }
+                else
                 {
                     ibuf.WriteByte(b);
                 }
