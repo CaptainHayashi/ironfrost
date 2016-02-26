@@ -7,7 +7,7 @@ namespace ironfrost
 {
     public class Client
     {
-        public delegate Task RespondAsync(List<string> command);
+        public delegate Task RespondAsync(IEnumerable<string> command);
 
         public string Name { get; }
 
@@ -32,7 +32,7 @@ namespace ironfrost
             return tok.Feed(buffer.Take(nread));
         }
 
-        public async Task WriteAsync(List<string> command)
+        public async Task WriteAsync(IEnumerable<string> command)
         {
             using (var mbuf = new MemoryStream(1024)) {
                 var packer = new Packer(mbuf);
