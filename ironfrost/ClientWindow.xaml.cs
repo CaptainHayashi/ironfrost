@@ -31,20 +31,17 @@ namespace ironfrost
             respond = rs;
         }
 
-        private void Respond(string word, IEnumerable<string> args)
+        /// <summary>
+        ///    Creates a new, fresh tag.
+        /// </summary>
+        /// <returns>
+        ///     A tag string.  This string should be globally unique.
+        /// </returns>
+        private string FreshTag()
         {
-            var cmd = new List<string>();
-
-            var tag = Guid.NewGuid();
-            cmd.Add(tag.ToString());
-
-            cmd.Add(word);
-            foreach (var arg in args)
-            {
-                cmd.Add(arg);
-            }
-            respond(cmd);
+            return Guid.NewGuid().ToString();
         }
+
 
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
@@ -54,28 +51,28 @@ namespace ironfrost
 
             if (ok == true)
             {
-                Respond("fload", new[] { dlg.FileName });
+                respond(new Message(FreshTag(), "fload", dlg.FileName));
             }
         }
 
         private void btnEject_Click(object sender, RoutedEventArgs e)
         {
-            Respond("eject", new string[] { });
+            respond(new Message(FreshTag(), "eject"));
         }
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
-            Respond("play", new string[] { });
+            respond(new Message(FreshTag(), "play"));
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
-            Respond("stop", new string[] { });
+            respond(new Message(FreshTag(), "stop"));
         }
 
         private void btnEnd_Click(object sender, RoutedEventArgs e)
         {
-            Respond("end", new string[] { });
+            respond(new Message(FreshTag(), "end"));
         }
     }
 }
