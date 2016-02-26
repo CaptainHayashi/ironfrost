@@ -54,6 +54,23 @@ namespace ironfrost
         }
 
         /// <summary>
+        ///     Constructs a message from a tag, word, and variadic arguments.
+        /// </summary>
+        /// <param name="tag">
+        ///     The new message's tag.
+        /// </param>
+        /// <param name="word">
+        ///     The new message's message word.
+        /// </param>
+        /// <param name="args">
+        ///     Every argument after <paramref name="word"/> is treated as a
+        ///     message argument.
+        /// </param>
+        public Message(string tag, string word, params string[] args)
+            : this(tag, word, (IEnumerable<string>)args)
+        { }
+
+        /// <summary>
         ///     Constructs a message from a word list.
         ///     
         ///     <para>
