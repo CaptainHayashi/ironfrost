@@ -10,7 +10,7 @@ namespace ironfrost
     /// </summary>
     public partial class ClientWindow : Window
     {
-        private Client.RespondAsync respond;
+        private ClientSocket.RespondAsync respond;
 
         public string ClientName { get; }
         public ObservableCollection<Message> Msgs { get; }
@@ -20,7 +20,7 @@ namespace ironfrost
             Msgs.Add(msg);
         }
 
-        public ClientWindow(string name, Client.RespondAsync rs)
+        public ClientWindow(string name, ClientSocket.RespondAsync rs)
         {
             InitializeComponent();
 
@@ -46,7 +46,7 @@ namespace ironfrost
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
             var dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.Filter = "Audio files (.mp3, .flac, .wav)|*.mp3;*.wav;*.flac";
+            dlg.Filter = "Audio files (.mp3, .flac, .wav, .ogg)|*.mp3;*.wav;*.flac;*.ogg";
             bool? ok = dlg.ShowDialog(this);
 
             if (ok == true)
