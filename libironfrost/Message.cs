@@ -5,6 +5,18 @@ using System.Linq;
 namespace ironfrost
 {
     /// <summary>
+    ///     Delegate for hooking up message send notifications.
+    /// </summary>
+    /// <param name="obj">
+    ///     The originating object.
+    /// </param>
+    /// <param name="msg">
+    ///     The message the originating object wishes to send.
+    /// </param>
+    public delegate void MessageSendHandler(object obj, Message msg);
+
+
+    /// <summary>
     ///    A Bifrost message.
     ///    
     ///    <para>

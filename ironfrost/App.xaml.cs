@@ -26,22 +26,15 @@ namespace ironfrost
                 Console.Out.WriteLine(ex.ToString());
                 throw;
             }
+            
+            var rl = new InitialClientRole();
+            
+            var client = new Client(bc, rl);
 
             var wnd = new ClientWindow(bc.Name, bc.WriteAsync);
-
-            Func<Task> loop = async () =>
-            {
-                while (true)
-                {
-                    var lines = await bc.ReadAsync();
-                    foreach (var line in lines)
-                    {
-                        var msg = new Message(line);
-                        wnd.Dispatcher.Invoke(() => { wnd.NewMessage(msg); });
-                    }
-                }
-            };
-            Task.Run(loop);
+            rl.RecvMessage += (obj, msg) => wnd.Dispatcher.Invoke(() => wnd.NewMessage(msg));
+            
+            Task.Run(client.RunAsync);
 
             wnd.Show();
         }
