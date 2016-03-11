@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 namespace ironfrost
 {
     /// <summary>
-    ///     A low-level Bifrost client.
+    ///   A low-level Bifrost client.
     ///
-    ///     <para>
-    ///         <c>Client</c> allows Bifrost messages to be read and written as
-    ///         lists of strings over TCP.
-    ///     </para>
+    ///   <para>
+    ///     <c>Client</c> allows Bifrost messages to be read and written as
+    ///     lists of strings over TCP.
+    ///   </para>
     /// </summary>
     public class ClientSocket
     {

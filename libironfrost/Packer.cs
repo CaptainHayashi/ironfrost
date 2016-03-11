@@ -32,7 +32,7 @@ namespace ironfrost
         void PackWord(string word)
         {
             // We see why we have a second buf later.
-            var ibuf = new System.IO.MemoryStream(word.Count() * 2);
+            var ibuf = new MemoryStream(word.Count() * 2);
 
             byte[] wordbytes = Encoding.UTF8.GetBytes(word);
 

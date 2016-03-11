@@ -82,16 +82,16 @@ namespace ironfrost
         /// </param>
         private void ChangeRole(IClientRole newRole)
         {
-            if (this.role != null)
+            if (role != null)
             {
-                this.role.SendMessage -= MessageSocket;
-                this.role.Change -= ChangeRole;
+                role.SendMessage -= MessageSocket;
+                role.Change -= ChangeRole;
             }
 
-            this.role = newRole;
+            role = newRole;
 
-            this.role.SendMessage += MessageSocket;
-            this.role.Change += ChangeRole;
+            role.SendMessage += MessageSocket;
+            role.Change += ChangeRole;
         }
     }
 }
