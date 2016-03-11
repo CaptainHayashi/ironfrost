@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace ironfrost
 {
@@ -31,7 +32,21 @@ namespace ironfrost
             this.socket = socket;
             this.role = role;
 
+            this.socket.LineEvent += ProcessLine;
+
             ChangeRole(role);
+        }
+
+        /// <summary>
+        ///   Processes a line from the <c>ClientSocket</c>.
+        /// </summary>
+        /// <param name="line">
+        ///   The line to process.
+        /// </param>
+        private void ProcessLine(List<string> line)
+        {
+            var msg = new Message(line);
+            role.HandleMessage(msg);
         }
 
         /// <summary>
@@ -41,12 +56,7 @@ namespace ironfrost
         {
             while (true)
             {
-                var lines = await socket.ReadAsync();
-                foreach (var line in lines)
-                {
-                    var msg = new Message(line);
-                    role.HandleMessage(msg);
-                }
+                await socket.ReadAsync();
             }
         }
 

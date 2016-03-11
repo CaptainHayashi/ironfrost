@@ -19,6 +19,11 @@ namespace ironfrost
 
         public string Name { get; }
 
+        /// <summary>
+        ///   Event fired when a <c>ReadAsync</c> gets a line.
+        /// </summary>
+        public event Tokeniser.LineHandler LineEvent;
+
         private System.Net.Sockets.TcpClient client;
         private System.Net.Sockets.NetworkStream stream;
         private byte[] buffer;
@@ -32,12 +37,21 @@ namespace ironfrost
             stream = client.GetStream();
             buffer = new byte[4096];
             this.tok = tok;
+            this.tok.LineEvent += GotLine;
         }
 
-        public async Task<List<List<string>>> ReadAsync()
+        private void GotLine(List<string> line)
+        {
+            if (LineEvent != null)
+            {
+                LineEvent(line);
+            }
+        }
+
+        public async Task ReadAsync()
         {
             int nread = await stream.ReadAsync(buffer, 0, buffer.Length);
-            return tok.Feed(buffer.Take(nread));
+            tok.Feed(buffer.Take(nread));
         }
 
         public async Task WriteAsync(IEnumerable<string> command)
