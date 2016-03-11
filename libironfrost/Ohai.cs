@@ -1,9 +1,20 @@
 namespace ironfrost
 {
     /// <summary>
+    ///     Delegate for hooking up OHAI notifications.
+    /// </summary>
+    /// <param name="obj">
+    ///     The originating object.
+    /// </param>
+    /// <param name="ohai">
+    ///     The information from the OHAI response.
+    /// </param>
+    public delegate void OhaiHandler(object obj, Ohai ohai);
+    
+    /// <summary>
     ///     Structure for <c>OHAI</c> response information.
     /// </summary>
-    struct Ohai
+    public struct Ohai
     {
         /// <summary>
         ///     The client ID assigned by the server.

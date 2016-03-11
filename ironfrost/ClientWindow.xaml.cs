@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Windows;
 
@@ -8,16 +8,26 @@ namespace ironfrost
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class ClientWindow : Window
+    public partial class ClientWindow : Window, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private ClientSocket.RespondAsync respond;
 
-        public string ClientName { get; }
+        public string ClientName { get; private set; }
         public ObservableCollection<Message> Msgs { get; }
 
         public void NewMessage(Message msg)
         {
             Msgs.Add(msg);
+        }
+        
+        public void Ohai(Ohai ohai)
+        {
+            ClientName = $"{ohai.clientID}@{ClientName}/{ohai.serverID} [{ohai.protocolID}]";
+            if (PropertyChanged != null) {
+                PropertyChanged(this, new PropertyChangedEventArgs("ClientName"));
+            }
         }
 
         public ClientWindow(string name, ClientSocket.RespondAsync rs)
