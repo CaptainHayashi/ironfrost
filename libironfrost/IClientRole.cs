@@ -20,6 +20,11 @@ namespace ironfrost
     public interface IClientRole
     {
         /// <summary>
+        ///   The name of this role.
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
         ///   Event fired when the <c>IClientRole</c> wants to send a
         ///   message.
         /// </summary>

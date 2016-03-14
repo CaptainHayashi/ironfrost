@@ -55,6 +55,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="InitialControl.xaml.cs">
+      <DependentUpon>InitialControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NullControl.xaml.cs">
+      <DependentUpon>NullControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PlayerControl.xaml.cs">
+      <DependentUpon>PlayerControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="ClientWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +76,18 @@
       <DependentUpon>ClientWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="InitialControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NullControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlayerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ironfrost
 {
@@ -11,8 +12,6 @@ namespace ironfrost
     public partial class ClientWindow : Window, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
-        private ClientSocket.RespondAsync respond;
 
         public string ClientName { get; private set; }
         public ObservableCollection<Message> Msgs { get; }
@@ -30,15 +29,36 @@ namespace ironfrost
             }
         }
 
-        public ClientWindow(string name, ClientSocket.RespondAsync rs)
+        public void Change(IClientRole newRole)
+        {
+            newRole.RecvMessage += (obj, msg) => Dispatcher.Invoke(() => NewMessage(msg));
+            newRole.Change += (nr) => Dispatcher.Invoke(() => Change(nr));
+
+            UserControl ctl = null;
+            if (newRole is InitialClientRole)
+            {
+                ctl = new InitialControl();
+                var rl = newRole as InitialClientRole;
+                rl.Ohai += (obj, ohai) => Dispatcher.Invoke(() => Ohai(ohai));
+            }
+            else if (newRole is NullClientRole)
+            {
+                ctl = new NullControl(newRole);
+            }
+
+            tabControls.Content = ctl;
+        }
+
+        public ClientWindow(string name, IClientRole role)
         {
             InitializeComponent();
 
             ClientName = name;
             Msgs = new ObservableCollection<Message>();
+
             DataContext = this;
 
-            respond = rs;
+            Change(role);
         }
 
         /// <summary>
@@ -50,39 +70,6 @@ namespace ironfrost
         private string FreshTag()
         {
             return Guid.NewGuid().ToString();
-        }
-
-
-        private void btnLoad_Click(object sender, RoutedEventArgs e)
-        {
-            var dlg = new Microsoft.Win32.OpenFileDialog();
-            dlg.Filter = "Audio files (.mp3, .flac, .wav, .ogg)|*.mp3;*.wav;*.flac;*.ogg";
-            bool? ok = dlg.ShowDialog(this);
-
-            if (ok == true)
-            {
-                respond(new Message(FreshTag(), "fload", dlg.FileName));
-            }
-        }
-
-        private void btnEject_Click(object sender, RoutedEventArgs e)
-        {
-            respond(new Message(FreshTag(), "eject"));
-        }
-
-        private void btnPlay_Click(object sender, RoutedEventArgs e)
-        {
-            respond(new Message(FreshTag(), "play"));
-        }
-
-        private void btnStop_Click(object sender, RoutedEventArgs e)
-        {
-            respond(new Message(FreshTag(), "stop"));
-        }
-
-        private void btnEnd_Click(object sender, RoutedEventArgs e)
-        {
-            respond(new Message(FreshTag(), "end"));
         }
     }
 }

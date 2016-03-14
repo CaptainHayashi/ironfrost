@@ -1,3 +1,5 @@
+using System;
+
 namespace ironfrost
 {
     /// <summary>
@@ -21,6 +23,23 @@ namespace ironfrost
         /// </summary>
         private Ohai ohai;
 
+        /// <summary>
+        ///   The name of the Bifrost role associated with this
+        ///   <c>InitialClientRole</c>.
+        ///   
+        ///   <para>
+        ///     We don't actually know the role yet, so we give the empty
+        ///     string.
+        ///   </para>
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return "";
+            }
+        }
+
         public void HandleMessage(Message msg)
         {
             if (RecvMessage != null)
@@ -32,13 +51,17 @@ namespace ironfrost
             {
                 HandleOhai(msg.Args);
             }
+            else if (msg.Word == "IAMA")
+            {
+                HandleIama(msg.Args);
+            }
         }
 
         /// <summary>
         ///   Handles an OHAI message.
         /// </summary>
-        /// <param name="args" />
-        ///   The message arguments which should be of size 3.
+        /// <param name="args">
+        ///   The message arguments, which should be of size 3.
         /// </param>
         private void HandleOhai(string[] args)
         {
@@ -51,6 +74,22 @@ namespace ironfrost
             if (Ohai != null)
             {
                 Ohai(this, ohai);
+            }
+        }
+
+        /// <summary>
+        ///   Handles an IAMA message.
+        /// </summary>
+        /// <param name="args">
+        ///   The message arguments, which should be of size 1.
+        /// </param>
+        private void HandleIama(string[] args)
+        {
+            // TODO(CaptainHayashi): check size
+            // TODO(CaptainHayashi): actually understand things
+            if (Change != null)
+            {
+                Change(new NullClientRole(args[0]));
             }
         }
     }

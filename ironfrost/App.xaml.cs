@@ -31,10 +31,8 @@ namespace ironfrost
             
             var client = new Client(bc, rl);
 
-            var wnd = new ClientWindow(bc.Name, bc.WriteAsync);
-            rl.RecvMessage += (obj, msg) => wnd.Dispatcher.Invoke(() => wnd.NewMessage(msg));
-            rl.Ohai += (obj, ohai) => wnd.Dispatcher.Invoke(() => wnd.Ohai(ohai));
-            
+            var wnd = new ClientWindow(bc.Name, rl);
+
             Task.Run(client.RunAsync);
 
             wnd.Show();
