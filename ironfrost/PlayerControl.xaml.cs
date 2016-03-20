@@ -48,7 +48,23 @@ namespace ironfrost
             Role = role;
             DataContext = role;
 
+            Role.PropertyChanged += RolePropertyChanged;
+
             InitializeComponent();
+        }
+
+        private void RolePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            /* Most of the Role's properties are tracked by the view;
+               the only one we need to do something on is if the state changes,
+               to tell the control to check whether its buttons need disabling
+               and reenabling. */
+            if (e.PropertyName == "State")
+            {
+                Dispatcher.Invoke(() => {
+                    CommandManager.InvalidateRequerySuggested();
+                });
+            }
         }
 
         private void ExecuteLoad(object sender, ExecutedRoutedEventArgs e)
@@ -63,9 +79,19 @@ namespace ironfrost
             }
         }
 
+        private void CanEject(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = Role.State != PlayerClientRole.PlayerState.Ejected;
+        }
+
         private void ExecuteEject(object sender, ExecutedRoutedEventArgs e)
         {
             Role.RequestEject();
+        }
+
+        private void CanPlay(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = Role.State == PlayerClientRole.PlayerState.Stopped;
         }
 
         private void ExecutePlay(object sender, ExecutedRoutedEventArgs e)
@@ -73,9 +99,19 @@ namespace ironfrost
             Role.RequestPlay();
         }
 
+        private void CanStop(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = Role.State == PlayerClientRole.PlayerState.Playing;
+        }
+
         private void ExecuteStop(object sender, ExecutedRoutedEventArgs e)
         {
             Role.RequestStop();
+        }
+
+        private void CanEnd(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = Role.State != PlayerClientRole.PlayerState.Ejected;
         }
 
         private void ExecuteEnd(object sender, ExecutedRoutedEventArgs e)

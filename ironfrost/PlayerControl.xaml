@@ -8,11 +8,21 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.Close" Executed="ExecuteEject" />
-        <CommandBinding Command="ApplicationCommands.Open" Executed="ExecuteLoad" />
-        <CommandBinding Command="MediaCommands.Stop" Executed="ExecuteStop" />
-        <CommandBinding Command="MediaCommands.Play" Executed="ExecutePlay" />
-        <CommandBinding Command="MediaCommands.NextTrack" Executed="ExecuteEnd" />
+        <CommandBinding Command="ApplicationCommands.Close"
+                        CanExecute="CanEject"
+                        Executed="ExecuteEject" />
+        <!-- We can always load, so no CanExecute needed. -->
+        <CommandBinding Command="ApplicationCommands.Open"
+                        Executed="ExecuteLoad" />
+        <CommandBinding Command="MediaCommands.Stop"
+                        CanExecute="CanStop"
+                        Executed="ExecuteStop" />
+        <CommandBinding Command="MediaCommands.Play"
+                        CanExecute="CanPlay"
+                        Executed="ExecutePlay" />
+        <CommandBinding Command="MediaCommands.NextTrack"
+                        CanExecute="CanEnd"
+                        Executed="ExecuteEnd" />
     </UserControl.CommandBindings>
     <UserControl.Resources>
         <local:PlayerStateToFAConverter x:Key="PlayerStateToFAConverter" />
