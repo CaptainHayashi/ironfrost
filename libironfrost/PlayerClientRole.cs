@@ -92,8 +92,7 @@ namespace ironfrost
             switch (msg.Word)
             {
                 case "FLOAD":
-                    Fload = msg.Args[0];
-                    Notify("Fload");
+                    UpdateFload(msg.Args[0]);
 
                     /* Assume that a FLOAD that wasn't preceded by an EJECT
                      * doesn't mean we've actually loaded anything.
@@ -119,6 +118,11 @@ namespace ironfrost
                 case "END":
                     // TODO(CaptainHayashi): End signal.
                     UpdateState(PlayerState.Stopped);
+                    UpdatePos(0);
+                    break;
+                case "EJECT":
+                    UpdateState(PlayerState.Ejected);
+                    UpdateFload(null);
                     UpdatePos(0);
                     break;
                 case "POS":
@@ -190,6 +194,15 @@ namespace ironfrost
             if (SendMessage != null)
             {
                 SendMessage(this, new Message(Message.FreshTag(), word, args));
+            }
+        }
+
+        private void UpdateFload(string newFload)
+        {
+            if (Fload != newFload)
+            {
+                Fload = newFload;
+                Notify("Fload");
             }
         }
 
