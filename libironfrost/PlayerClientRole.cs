@@ -118,6 +118,69 @@ namespace ironfrost
             }
         }
 
+        /// <summary>
+        ///   Asks this role to send a 'fload' message.
+        /// </summary>
+        /// <param name="file">
+        ///   The file to load.
+        /// </param>
+        public void RequestFload(string file)
+        {
+            Send("fload", file);
+        }
+
+        /// <summary>
+        ///   Asks this role to send a 'pos' message.
+        /// </summary>
+        /// <param name="pos">
+        ///   The position to request, in microseconds.
+        /// </param>
+        public void RequestPos(uint pos)
+        {
+            Send("pos", pos.ToString());
+        }
+
+        /// <summary>
+        ///   Asks this role to send a 'play' message.
+        /// </summary>
+        public void RequestPlay()
+        {
+            Send("play");
+        }
+
+        /// <summary>
+        ///   Asks this role to send a 'stop' message.
+        /// </summary>
+        public void RequestStop()
+        {
+            Send("stop");
+        }
+
+        /// <summary>
+        ///   Asks this role to send an 'eject' message.
+        /// </summary>
+        public void RequestEject()
+        {
+            Send("eject");
+        }
+
+        /// <summary>
+        ///   Asks this role to send an 'end' message.
+        /// </summary>
+        public void RequestEnd()
+        {
+            Send("end");
+        }
+
+        private void Send(string word, params string[] args)
+        {
+            // TODO(CaptainHayashi): return task for checking if this succeeded
+            if (SendMessage != null)
+            {
+                SendMessage(this, new Message(Message.FreshTag(), word, args));
+            }
+        }
+
         private void UpdateState(PlayerState newState)
         {
             if (State != newState)

@@ -25,8 +25,25 @@ namespace ironfrost
         /// </summary>
         public PlayerClientRole Role { get; }
 
-        public PlayerControl(PlayerClientRole role)
+        /// <summary>
+        ///   The window in which this <c>PlayerControl</c> is embedded.
+        /// </summary>
+        private ClientWindow wnd;
+
+        /// <summary>
+        ///   Constructs a <c>PlayerControl</c>.
+        /// </summary>
+        /// <param name="wnd">
+        ///   The window in which this <c>PlayerControl</c> is embedded.
+        /// </param>
+        /// <param name="role">
+        ///   The role to be used for listening to responses and sending
+        ///   changes.
+        /// </param>
+        public PlayerControl(ClientWindow wnd, PlayerClientRole role)
         {
+            this.wnd = wnd;
+
             Role = role;
             DataContext = role;
 
@@ -35,34 +52,34 @@ namespace ironfrost
 
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
-            //var dlg = new Microsoft.Win32.OpenFileDialog();
-            //dlg.Filter = "Audio files (.mp3, .flac, .wav, .ogg)|*.mp3;*.wav;*.flac;*.ogg";
-            //bool? ok = dlg.ShowDialog(this);
+            var dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.Filter = "Audio files (.mp3, .flac, .wav, .ogg)|*.mp3;*.wav;*.flac;*.ogg";
+            bool? ok = dlg.ShowDialog();
 
-            //if (ok == true)
-            //{
-            //    respond(new Message(FreshTag(), "fload", dlg.FileName));
-            //}
+            if (ok == true)
+            {
+                Role.RequestFload(dlg.FileName);
+            }
         }
 
         private void btnEject_Click(object sender, RoutedEventArgs e)
         {
-            //respond(new Message(FreshTag(), "eject"));
+            Role.RequestEject();
         }
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
-            //respond(new Message(FreshTag(), "play"));
+            Role.RequestPlay();
         }
 
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
-            //respond(new Message(FreshTag(), "stop"));
+            Role.RequestStop();
         }
 
         private void btnEnd_Click(object sender, RoutedEventArgs e)
         {
-            //respond(new Message(FreshTag(), "end"));
+            Role.RequestEnd();
         }
     }
 }
