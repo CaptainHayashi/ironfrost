@@ -43,7 +43,7 @@ namespace ironfrost
             }
             else if (newRole is PlayerClientRole)
             {
-                ctl = new PlayerControl(newRole);
+                ctl = new PlayerControl(newRole as PlayerClientRole);
             }
             else
             {

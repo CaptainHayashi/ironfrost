@@ -23,9 +23,9 @@ namespace ironfrost
         /// <summary>
         ///   The client role to which this <c>PlayerControl</c> is attached.
         /// </summary>
-        public IClientRole Role { get; }
+        public PlayerClientRole Role { get; }
 
-        public PlayerControl(IClientRole role)
+        public PlayerControl(PlayerClientRole role)
         {
             Role = role;
             DataContext = role;
