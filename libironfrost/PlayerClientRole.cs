@@ -95,12 +95,11 @@ namespace ironfrost
                     UpdateFload(msg.Args[0]);
 
                     /* Assume that a FLOAD that wasn't preceded by an EJECT
-                     * doesn't mean we've actually loaded anything.
-                     *
-                     * Conversely, if it was, then we can assume we've moved to
-                     * Stopped with a position of 0.  The server might tell us
-                     * this anyway, but it doesn't need to.
-                     */
+                       doesn't mean we've actually loaded anything.
+
+                       Conversely, if it was, then we can assume we've moved to
+                       Stopped with a position of 0.  The server might tell us
+                       this anyway, but it doesn't need to. */
                     if (State == PlayerState.Ejected)
                     {
                         State = PlayerState.Stopped;

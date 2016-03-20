@@ -20,11 +20,12 @@ namespace ironfrost
         {
             Msgs.Add(msg);
         }
-        
+
         public void Ohai(Ohai ohai)
         {
             ClientName = $"{ohai.clientID}@{ClientName}/{ohai.serverID} [{ohai.protocolID}]";
-            if (PropertyChanged != null) {
+            if (PropertyChanged != null)
+            {
                 PropertyChanged(this, new PropertyChangedEventArgs("ClientName"));
             }
         }

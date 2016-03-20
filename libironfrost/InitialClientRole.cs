@@ -86,7 +86,6 @@ namespace ironfrost
         private void HandleIama(string[] args)
         {
             // TODO(CaptainHayashi): check size
-            // TODO(CaptainHayashi): actually understand things
 
             IClientRole newRole = new NullClientRole(args[0]);
 

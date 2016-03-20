@@ -42,16 +42,16 @@ namespace ironfrost
             {
                 var c = (char)b;
 
-                // These are the characters (including all whitespace, via
-                // isspace())  whose presence means we need to single-quote
-                // escape the argument.
+                /* These are the characters (including all whitespace, via
+                   isspace()) whose presence means we need to single-quote
+                   escape the argument. */
                 bool is_escaper = c == '"' || c == '\'' || c == '\\';
                 if (char.IsWhiteSpace(c) || is_escaper) escaping = true;
 
-                // Since we use single-quote escaping, the only thing we need
-                // to escape by itself is single quotes, which are replaced by
-                // the sequence '\'' (break out of single quotes, escape a
-                // single quote, then re-enter single quotes).
+                /* Since we use single-quote escaping, the only thing we need
+                   to escape by itself is single quotes, which are replaced by
+                   the sequence '\'' (break out of single quotes, escape a
+                   single quote, then re-enter single quotes). */
                 if (c == '\'')
                 {
                     ibuf.WriteByte((byte)'\'');
@@ -65,9 +65,9 @@ namespace ironfrost
                 }
             }
 
-            // Now, copy ibuf to buf.
-            // If we've marked ourselves as single-quoting, surround ibuf in single
-            // quotes.
+            /* Now, copy ibuf to buf.
+               If we've marked ourselves as single-quoting, surround ibuf in single
+               quotes. */
             if (escaping)
             {
                 ostream.WriteByte((byte)'\'');
