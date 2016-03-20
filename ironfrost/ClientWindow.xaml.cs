@@ -41,7 +41,11 @@ namespace ironfrost
                 var rl = newRole as InitialClientRole;
                 rl.Ohai += (obj, ohai) => Dispatcher.Invoke(() => Ohai(ohai));
             }
-            else if (newRole is NullClientRole)
+            else if (newRole is PlayerClientRole)
+            {
+                ctl = new PlayerControl(newRole);
+            }
+            else
             {
                 ctl = new NullControl(newRole);
             }

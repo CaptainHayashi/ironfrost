@@ -25,8 +25,11 @@ namespace ironfrost
         /// </summary>
         public IClientRole Role { get; }
 
-        public PlayerControl()
+        public PlayerControl(IClientRole role)
         {
+            Role = role;
+            DataContext = role;
+
             InitializeComponent();
         }
 

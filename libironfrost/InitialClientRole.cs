@@ -87,9 +87,21 @@ namespace ironfrost
         {
             // TODO(CaptainHayashi): check size
             // TODO(CaptainHayashi): actually understand things
+
+            IClientRole newRole = new NullClientRole(args[0]);
+
+            switch (args[0])
+            {
+                case "player/file":
+                    newRole = new PlayerClientRole();
+                    break;
+                default:
+                    break;
+            }
+
             if (Change != null)
             {
-                Change(new NullClientRole(args[0]));
+                Change(newRole);
             }
         }
     }

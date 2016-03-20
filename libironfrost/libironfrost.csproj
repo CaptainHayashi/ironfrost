@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PlayerClientRole.cs" />
     <Compile Include="NullClientRole.cs" />
     <Compile Include="Ohai.cs" />
     <Compile Include="Client.cs" />
