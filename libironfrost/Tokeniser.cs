@@ -202,7 +202,7 @@ namespace ironfrost
             }
             else if ('\\' == r)
             {
-                return (byte s) => { PushByte(s); return processByte; };
+                return (byte s) => { PushByte(s); return ProcessUnquotedByte; };
             }
             else if (char.IsWhiteSpace((char)r))
             {
@@ -285,7 +285,7 @@ namespace ironfrost
             }
             else if ('\\' == r)
             {
-                return (byte s) => { PushByte(s); return processByte; };
+                return (byte s) => { PushByte(s); return ProcessDQuotedByte; };
             }
 
             PushByte(r);
