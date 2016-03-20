@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -44,6 +45,18 @@ namespace ironfrost
         ///   The message arguments.
         /// </summary>
         public string[] Args { get; }
+
+        /// <summary>
+        ///   Produces a fresh tag.
+        /// </summary>
+        /// <returns>
+        ///   A (hopefully) unique tag, ready to be used in a <c>Message</c>
+        ///   constructor.
+        /// </returns>
+        public static string FreshTag()
+        {
+            return Guid.NewGuid().ToString();
+        }
 
         /// <summary>
         ///   Constructs a message from a tag, word, and argument list.

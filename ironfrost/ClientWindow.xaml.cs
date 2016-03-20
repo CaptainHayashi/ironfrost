@@ -64,16 +64,5 @@ namespace ironfrost
 
             Change(role);
         }
-
-        /// <summary>
-        ///    Creates a new, fresh tag.
-        /// </summary>
-        /// <returns>
-        ///     A tag string.  This string should be globally unique.
-        /// </returns>
-        private string FreshTag()
-        {
-            return Guid.NewGuid().ToString();
-        }
     }
 }
