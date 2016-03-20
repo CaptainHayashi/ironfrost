@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 
 namespace ironfrost
@@ -46,6 +47,21 @@ namespace ironfrost
         public uint Pos { get; private set; }
 
         /// <summary>
+        ///   The current position, as a <c>TimeSpan</c>.
+        ///
+        ///    <para>
+        ///        This conversion loses precision.
+        ///    </para>
+        /// </summary>
+        public TimeSpan PosSpan
+        {
+            get
+            {
+                return TimeSpan.FromMilliseconds(Pos / 1000);
+            }
+        }
+
+        /// <summary>
         ///   The current state of the player.
         /// </summary>
         public PlayerState State { get; private set; }
@@ -91,11 +107,7 @@ namespace ironfrost
                         State = PlayerState.Stopped;
                         Notify("State");
 
-                        if (Pos != 0)
-                        {
-                            Pos = 0;
-                            Notify("Pos");
-                        }
+                        UpdatePos(0);
                     }
                     break;
                 case "PLAY":
@@ -196,6 +208,7 @@ namespace ironfrost
             {
                 Pos = newPos;
                 Notify("Pos");
+                Notify("PosSpan");
             }
         }
 
