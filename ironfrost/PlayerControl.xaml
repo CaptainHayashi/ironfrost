@@ -31,33 +31,35 @@
             </Button>
             <TextBox x:Name="txtFload" IsEnabled="False" Text="{Binding Fload, Mode=OneWay}" />
         </DockPanel>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="2*" />
-            </Grid.ColumnDefinitions>
-            <fa:ImageAwesome Grid.Row="0" Grid.Column="0" MaxWidth="64" MaxHeight="64" Name="stateImage"
-                             Icon="{Binding State, Mode=OneWay, Converter={StaticResource PlayerStateToFAConverter}}" />
-            <Border Grid.Row="1" Grid.Column="2"
-                    BorderThickness="1"
-                    CornerRadius="5" Padding="5" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" HorizontalAlignment="Center" VerticalAlignment="Center"
-                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}">
-                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2">
-                    <TextBlock x:Name="txtPosH" IsEnabled="False" Text="{Binding PosSpan.Hours, FallbackValue='xx', StringFormat='{}{0:D2}', Mode=OneWay}"
-                     Foreground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" FontFamily="Consolas" FontSize="32" />
-                    <TextBlock x:Name="txtPosHM" IsEnabled="False" Text=":"
-                     Foreground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" FontFamily="Consolas" FontSize="32" />
-                    <TextBlock x:Name="txtPosM" IsEnabled="False" Text="{Binding PosSpan.Minutes, FallbackValue='xx', StringFormat='{}{0:D2}', Mode=OneWay}"
-                     Foreground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" FontFamily="Consolas" FontSize="32" />
-                    <TextBlock x:Name="txtPosMS" IsEnabled="False" Text=":"
-                     Foreground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" FontFamily="Consolas" FontSize="24" />
-                    <TextBlock x:Name="txtPosS" IsEnabled="False" Text="{Binding PosSpan.Seconds, FallbackValue='xx', StringFormat='{}{0:D2}', Mode=OneWay}"
-                     Foreground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" FontFamily="Consolas" FontSize="24" />
+        <Border BorderThickness="1"
+                CornerRadius="5" Padding="5" Background="SlateGray" Margin="10"
+                BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
+                VerticalAlignment="Center"
+                TextBlock.Foreground="White">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="12pt" />
+                    <RowDefinition Height="32pt" />
+                    <RowDefinition Height="12pt" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <fa:ImageAwesome Grid.Row="0" Grid.RowSpan="3" MaxWidth="64" MaxHeight="64" Name="stateImage"
+                                 Icon="{Binding State, Mode=OneWay, Converter={StaticResource PlayerStateToFAConverter}}"
+                                 Foreground="White" />
+                <TextBlock Grid.Row="0" Grid.Column="1">Time</TextBlock>
+                <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center"
+                            TextBlock.FontFamily="Consolas"
+                            TextBlock.FontSize="32">
+                    <TextBlock x:Name="txtPosH" IsEnabled="False" Text="{Binding PosSpan.Hours, FallbackValue='xx', StringFormat='{}{0:D2}', Mode=OneWay}" />
+                    <TextBlock x:Name="txtPosHM" IsEnabled="False" Text=":" />
+                    <TextBlock x:Name="txtPosM" IsEnabled="False" Text="{Binding PosSpan.Minutes, FallbackValue='xx', StringFormat='{}{0:D2}', Mode=OneWay}" />
+                    <TextBlock x:Name="txtPosMS" IsEnabled="False" Text=":" FontSize="24" />
+                    <TextBlock x:Name="txtPosS" IsEnabled="False" Text="{Binding PosSpan.Seconds, FallbackValue='xx', StringFormat='{}{0:D2}', Mode=OneWay}" FontSize="24" />
                 </StackPanel>
-            </Border>
-        </Grid>
+            </Grid>
+        </Border>
     </DockPanel>
 </UserControl>
