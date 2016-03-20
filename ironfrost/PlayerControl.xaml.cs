@@ -51,7 +51,7 @@ namespace ironfrost
             InitializeComponent();
         }
 
-        private void btnLoad_Click(object sender, RoutedEventArgs e)
+        private void ExecuteLoad(object sender, ExecutedRoutedEventArgs e)
         {
             var dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.Filter = "Audio files (.mp3, .flac, .wav, .ogg)|*.mp3;*.wav;*.flac;*.ogg";
@@ -63,22 +63,22 @@ namespace ironfrost
             }
         }
 
-        private void btnEject_Click(object sender, RoutedEventArgs e)
+        private void ExecuteEject(object sender, ExecutedRoutedEventArgs e)
         {
             Role.RequestEject();
         }
 
-        private void btnPlay_Click(object sender, RoutedEventArgs e)
+        private void ExecutePlay(object sender, ExecutedRoutedEventArgs e)
         {
             Role.RequestPlay();
         }
 
-        private void btnStop_Click(object sender, RoutedEventArgs e)
+        private void ExecuteStop(object sender, ExecutedRoutedEventArgs e)
         {
             Role.RequestStop();
         }
 
-        private void btnEnd_Click(object sender, RoutedEventArgs e)
+        private void ExecuteEnd(object sender, ExecutedRoutedEventArgs e)
         {
             Role.RequestEnd();
         }

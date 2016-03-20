@@ -7,26 +7,33 @@
              xmlns:local="clr-namespace:ironfrost"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Close" Executed="ExecuteEject" />
+        <CommandBinding Command="ApplicationCommands.Open" Executed="ExecuteLoad" />
+        <CommandBinding Command="MediaCommands.Stop" Executed="ExecuteStop" />
+        <CommandBinding Command="MediaCommands.Play" Executed="ExecutePlay" />
+        <CommandBinding Command="MediaCommands.NextTrack" Executed="ExecuteEnd" />
+    </UserControl.CommandBindings>
     <UserControl.Resources>
         <local:PlayerStateToFAConverter x:Key="PlayerStateToFAConverter" />
     </UserControl.Resources>
     <DockPanel>
         <UniformGrid DockPanel.Dock="Bottom" Rows="1" Height="32">
-            <Button x:Name="btnEject" Padding="5" UseLayoutRounding="True" HorizontalContentAlignment="Center" Click="btnEject_Click">
+            <Button x:Name="btnEject" Padding="5" UseLayoutRounding="True" HorizontalContentAlignment="Center" Command="ApplicationCommands.Close">
                 <fa:ImageAwesome Icon="Eject" />
             </Button>
-            <Button x:Name="btnPlay" Padding="5" UseLayoutRounding="True" HorizontalContentAlignment="Center" Click="btnPlay_Click">
+            <Button x:Name="btnPlay" Padding="5" UseLayoutRounding="True" HorizontalContentAlignment="Center" Command="MediaCommands.Play">
                 <fa:ImageAwesome Icon="Play" />
             </Button>
-            <Button x:Name="btnStop" Padding="5" UseLayoutRounding="True" HorizontalContentAlignment="Center" Click="btnStop_Click">
+            <Button x:Name="btnStop" Padding="5" UseLayoutRounding="True" HorizontalContentAlignment="Center" Command="MediaCommands.Stop">
                 <fa:ImageAwesome Icon="Stop" />
             </Button>
-            <Button x:Name="btnEnd" Padding="5" UseLayoutRounding="True" HorizontalContentAlignment="Center" Click="btnEnd_Click">
+            <Button x:Name="btnEnd" Padding="5" UseLayoutRounding="True" HorizontalContentAlignment="Center" Command="MediaCommands.NextTrack">
                 <fa:ImageAwesome Icon="FastForward" />
             </Button>
         </UniformGrid>
         <DockPanel DockPanel.Dock="Bottom" Height="32">
-            <Button x:Name="btnLoad" DockPanel.Dock="Right" Padding="5" UseLayoutRounding="True" HorizontalContentAlignment="Center" Click="btnLoad_Click">
+            <Button x:Name="btnLoad" DockPanel.Dock="Right" Padding="5" UseLayoutRounding="True" HorizontalContentAlignment="Center" Command="ApplicationCommands.Open">
                 <fa:ImageAwesome Icon="FolderOpen" />
             </Button>
             <TextBox x:Name="txtFload" IsEnabled="False" Text="{Binding Fload, Mode=OneWay}" />
