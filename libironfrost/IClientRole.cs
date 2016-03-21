@@ -3,10 +3,13 @@ namespace ironfrost
     /// <summary>
     ///   Delegate for hooking up role change notifications.
     /// </summary>
+    /// <param name="oldRole">
+    ///   The current <c>ClientRole</c>.
+    /// </param>
     /// <param name="newRole">
     ///   The intended new <c>ClientRole</c>.
     /// </param>
-    public delegate void RoleChangeHandler(IClientRole newrole);
+    public delegate void RoleChangeHandler(IClientRole oldRole, IClientRole newrole);
 
     /// <summary>
     ///   Interface for client roles.

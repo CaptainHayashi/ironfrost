@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace ironfrost
 {
@@ -13,10 +14,24 @@ namespace ironfrost
     ///         <c>ClientSocket</c> for communication respectively.
     ///      </para>
     /// </summary>
-    public class Client
+    public class Client : INotifyPropertyChanged
     {
         private ClientSocket socket;
-        private IClientRole role;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public IClientRole Role { get; private set; }
+
+        /// <summary>
+        ///   The name of this Client.
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return socket.Name;
+            }
+        }
 
         /// <summary>
         ///     Creates a new <c>Client</c>.
@@ -30,11 +45,9 @@ namespace ironfrost
         public Client(ClientSocket socket, IClientRole role)
         {
             this.socket = socket;
-            this.role = role;
-
             this.socket.LineEvent += ProcessLine;
 
-            ChangeRole(role);
+            ChangeRole(null, role);
         }
 
         /// <summary>
@@ -46,7 +59,7 @@ namespace ironfrost
         private void ProcessLine(List<string> line)
         {
             var msg = new Message(line);
-            role.HandleMessage(msg);
+            Role.HandleMessage(msg);
         }
 
         /// <summary>
@@ -80,18 +93,26 @@ namespace ironfrost
         /// <param name="newRole">
         ///     The new <c>ClientRole</c>.
         /// </param>
-        private void ChangeRole(IClientRole newRole)
+        private void ChangeRole(IClientRole oldRole, IClientRole newRole)
         {
-            if (role != null)
+            if (oldRole != null)
             {
-                role.SendMessage -= MessageSocket;
-                role.Change -= ChangeRole;
+                oldRole.SendMessage -= MessageSocket;
+                oldRole.Change -= ChangeRole;
             }
 
-            role = newRole;
+            Role = newRole;
 
-            role.SendMessage += MessageSocket;
-            role.Change += ChangeRole;
+            if (newRole != null)
+            {
+                Role.SendMessage += MessageSocket;
+                Role.Change += ChangeRole;
+            }
+
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs("Role"));
+            }
         }
     }
 }

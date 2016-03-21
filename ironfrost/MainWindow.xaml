@@ -1,0 +1,41 @@
+﻿<Window x:Class="ironfrost.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ironfrost"
+        xmlns:fa="clr-namespace:FontAwesome.WPF;assembly=FontAwesome.WPF"
+        mc:Ignorable="d"
+        Title="Ironfrost"
+        Height="300" Width="300">
+    <Window.CommandBindings>
+            <CommandBinding Command="local:Commands.OpenClientWindow"
+                        Executed="ExecuteOpenClientWindow" />
+            <CommandBinding Command="ApplicationCommands.New"
+                        Executed="ExecuteConnect" />
+    </Window.CommandBindings>
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Command="ApplicationCommands.New" Content="Connect&#x2026;" />
+            </ToolBar>
+        </ToolBarTray>
+        <Label DockPanel.Dock="Top" Content="_Clients" Target="{Binding ElementName=lstClients}" />
+        <ListView Name="lstClients" Margin="10 0 10 10" ItemsSource="{Binding Clients}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Role" DisplayMemberBinding="{Binding Role.Name}" />
+                    <GridViewColumn Header="Actions">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Height="10pt" ToolTip="Open the presenter console for this client."
+                                        Command="local:Commands.OpenClientWindow" CommandParameter="{Binding}" Content="Console" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
+</Window>

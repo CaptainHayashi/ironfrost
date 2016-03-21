@@ -100,7 +100,7 @@ namespace ironfrost
 
             if (Change != null)
             {
-                Change(newRole);
+                Change(this, newRole);
             }
         }
     }

@@ -1,0 +1,46 @@
+﻿<Window x:Class="ironfrost.ConnectDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="clr-namespace:FontAwesome.WPF;assembly=FontAwesome.WPF"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:ironfrost"
+        mc:Ignorable="d"
+        Title="Connect to Bifrost Server" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Border Background="RoyalBlue" CornerRadius="5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="0 0 20 0" HorizontalAlignment="Center" VerticalAlignment="Center" >
+        <fa:ImageAwesome Icon="Plug" Margin="10" Foreground="White" Width="32" />
+        </Border>
+
+        <Label Grid.Row="0" Grid.Column="1" Margin="0 0 0 10"
+               Content="_Host:" 
+               Target="{Binding ElementName=txtHost}" />
+        <TextBox Grid.Row="0" Grid.Column="2" MinWidth="150" Margin="0 0 0 10"
+                 Name="txtHost"
+                 Text="{Binding Host}" />
+
+        <Label Grid.Row="1" Grid.Column="1"
+               Content="_Port:" 
+               Target="{Binding ElementName=iudPort}" />
+        <xctk:IntegerUpDown Grid.Row="1" Grid.Column="2" MinWidth="150"
+                            Name="iudPort" Minimum="0" Maximum="65535"
+                            Text="{Binding Port}" />
+
+        <WrapPanel Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Right" Margin="0 15 0 0">
+            <Button Name="btnConnect" IsDefault="True" MinWidth="60" Margin="0 0 10 0" Content="Connect" Click="btnConnect_Click" />
+            <Button Name="btnCancel" IsCancel="True" MinWidth="60" Content="Cancel" />
+        </WrapPanel>
+    </Grid>
+</Window>

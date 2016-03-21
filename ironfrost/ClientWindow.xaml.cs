@@ -31,8 +31,8 @@ namespace ironfrost
 
         public void Change(IClientRole newRole)
         {
+            // TODO(CaptainHayashi): transition to ClientTracker.
             newRole.RecvMessage += (obj, msg) => Dispatcher.Invoke(() => NewMessage(msg));
-            newRole.Change += (nr) => Dispatcher.Invoke(() => Change(nr));
 
             UserControl ctl = null;
             if (newRole is InitialClientRole)
