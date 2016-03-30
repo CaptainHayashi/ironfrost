@@ -190,10 +190,7 @@ namespace ironfrost
         private void Send(string word, params string[] args)
         {
             // TODO(CaptainHayashi): return task for checking if this succeeded
-            if (SendMessage != null)
-            {
-                SendMessage(this, new Message(Message.FreshTag(), word, args));
-            }
+            SendMessage?.Invoke(this, new Message(Message.FreshTag(), word, args));
         }
 
         private void UpdateFload(string newFload)

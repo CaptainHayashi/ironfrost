@@ -109,10 +109,7 @@ namespace ironfrost
                 Role.Change += ChangeRole;
             }
 
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("Role"));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Role"));
         }
     }
 }

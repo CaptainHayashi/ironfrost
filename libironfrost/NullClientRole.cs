@@ -24,10 +24,7 @@ namespace ironfrost
 
         public void HandleMessage(Message msg)
         {
-            if (RecvMessage != null)
-            {
-                RecvMessage(this, msg);
-            }
+            RecvMessage?.Invoke(this, msg);
 
             // Intentionally ignore responses.
             // TODO(CaptainHayashi): raise an error?

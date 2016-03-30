@@ -42,10 +42,7 @@ namespace ironfrost
 
         private void GotLine(List<string> line)
         {
-            if (LineEvent != null)
-            {
-                LineEvent(line);
-            }
+            LineEvent?.Invoke(line);
         }
 
         public async Task ReadAsync()
