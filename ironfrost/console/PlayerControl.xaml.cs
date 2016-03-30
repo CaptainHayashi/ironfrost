@@ -16,7 +16,7 @@ namespace ironfrost
         /// <summary>
         ///   The window in which this <c>PlayerControl</c> is embedded.
         /// </summary>
-        private ClientWindow wnd;
+        private Console wnd;
 
         /// <summary>
         ///   Constructs a <c>PlayerControl</c>.
@@ -28,7 +28,7 @@ namespace ironfrost
         ///   The role to be used for listening to responses and sending
         ///   changes.
         /// </param>
-        public PlayerControl(ClientWindow wnd, PlayerClientRole role)
+        public PlayerControl(Console wnd, PlayerClientRole role)
         {
             this.wnd = wnd;
 

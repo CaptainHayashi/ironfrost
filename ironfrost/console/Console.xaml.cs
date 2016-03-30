@@ -8,7 +8,7 @@ namespace ironfrost
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class ClientWindow : Window, INotifyPropertyChanged
+    public partial class Console : Window, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -53,7 +53,7 @@ namespace ironfrost
             tabControls.Content = ctl;
         }
 
-        public ClientWindow(string name, IClientRole role)
+        public Console(string name, IClientRole role)
         {
             InitializeComponent();
 

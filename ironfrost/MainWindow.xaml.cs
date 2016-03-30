@@ -17,7 +17,17 @@ namespace ironfrost
         public string Name { get { return Client.Name; } }
         public IClientRole Role { get { return Client.Role; } }
 
-        private ClientWindow window = null;
+
+        /// <summary>
+        ///   Holder for the client console, if it is open.
+        /// </summary>
+        private Console console = null;
+
+        /// <summary>
+        ///   Lock used to serialise accesses to <c>console</c>.
+        /// </summary>
+        private object consoleLock = new object();
+
 
         /// <summary>
         ///   Constructs a new <c>ClientTracker</c>.
@@ -37,10 +47,10 @@ namespace ironfrost
             if (e.PropertyName == "Role")
             {
                 // Lock to prevent races with other attempts to use the window.
-                lock (this)
+                lock (consoleLock)
                 {
                     var newRole = Client.Role;
-                    var wnd = window;
+                    var wnd = console;
                     wnd?.Dispatcher.Invoke(() => wnd.Change(newRole));
                 }
             }
@@ -53,20 +63,20 @@ namespace ironfrost
         /// <returns>
         ///   A <c>ClientWindow</c> on this tracker's <c>Client</c>.
         /// </returns>
-        public ClientWindow GetWindow()
+        public Console GetWindow()
         {
-            if (window == null)
+            if (console == null)
             {
                 // Lock to prevent races with things trying to use the window.
-                lock (this)
+                lock (consoleLock)
                 {
-                    window = new ClientWindow(Client.Name, Client.Role);
-                    window.Closed += (obj, e) => { window = null; };
-                    window.Show();
+                    console = new Console(Client.Name, Client.Role);
+                    console.Closed += (obj, e) => { console = null; };
+                    console.Show();
                 }
             }
 
-            return window;
+            return console;
         }
     }
 
@@ -116,7 +126,7 @@ namespace ironfrost
             }
             catch (System.Net.Sockets.SocketException ex)
             {
-                Console.Out.WriteLine(ex.ToString());
+                System.Console.Out.WriteLine(ex.ToString());
                 throw;
             }
 

@@ -91,16 +91,16 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="PlayerStateToFAConverter.cs" />
-    <Compile Include="InitialControl.xaml.cs">
+    <Compile Include="console\InitialControl.xaml.cs">
       <DependentUpon>InitialControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NullControl.xaml.cs">
+    <Compile Include="console\NullControl.xaml.cs">
       <DependentUpon>NullControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PlayerControl.xaml.cs">
+    <Compile Include="console\PlayerControl.xaml.cs">
       <DependentUpon>PlayerControl.xaml</DependentUpon>
     </Compile>
-    <Page Include="ClientWindow.xaml">
+    <Page Include="console\Console.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -108,15 +108,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ClientWindow.xaml.cs">
-      <DependentUpon>ClientWindow.xaml</DependentUpon>
+    <Compile Include="console\Console.xaml.cs">
+      <DependentUpon>Console.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ConnectDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="InitialControl.xaml">
+    <Page Include="console\InitialControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -124,11 +124,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NullControl.xaml">
+    <Page Include="console\NullControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PlayerControl.xaml">
+    <Page Include="console\PlayerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
