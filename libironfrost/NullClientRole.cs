@@ -6,7 +6,6 @@ namespace ironfrost
     public class NullClientRole : IClientRole
     {
         public event RoleChangeHandler Change;
-        public event MessageSendHandler RecvMessage;
         public event MessageSendHandler SendMessage;
 
         public string Name { get; }
@@ -22,10 +21,8 @@ namespace ironfrost
             Name = name;
         }
 
-        public void HandleMessage(Message msg)
+        public void HandleMessage(object sender, Message msg)
         {
-            RecvMessage?.Invoke(this, msg);
-
             // Intentionally ignore responses.
             // TODO(CaptainHayashi): raise an error?
         }

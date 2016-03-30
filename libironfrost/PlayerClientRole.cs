@@ -32,7 +32,6 @@ namespace ironfrost
         }
 
         public event RoleChangeHandler Change;
-        public event MessageSendHandler RecvMessage;
         public event MessageSendHandler SendMessage;
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -82,13 +81,8 @@ namespace ironfrost
             }
         }
 
-        public void HandleMessage(Message msg)
+        public void HandleMessage(object sender, Message msg)
         {
-            if (RecvMessage != null)
-            {
-                RecvMessage(this, msg);
-            }
-
             switch (msg.Word)
             {
                 case "FLOAD":
@@ -223,10 +217,7 @@ namespace ironfrost
 
         private void Notify(string property)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
     }
 }

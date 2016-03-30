@@ -34,12 +34,6 @@ namespace ironfrost
         event MessageSendHandler SendMessage;
 
         /// <summary>
-        ///   Event fired when the <c>IClientRole</c> has received a
-        ///   message.
-        /// </summary>
-        event MessageSendHandler RecvMessage;
-
-        /// <summary>
         ///   Event fired when the <c>IClientRole</c> wants to be replaced.
         /// </summary>
         event RoleChangeHandler Change;
@@ -47,9 +41,12 @@ namespace ironfrost
         /// <summary>
         ///   Handles the given message from a <c>Client</c>.
         /// </summary>
+        /// <param name="sender">
+        ///   The sender of the message.
+        /// </param>
         /// <param name="msg">
         ///   The message to handle.
         /// </param>
-        void HandleMessage(Message msg);
+        void HandleMessage(object sender, Message msg);
     }
 }

@@ -36,10 +36,16 @@ namespace ironfrost
             }
         }
 
-        private void ExecuteOpenClientWindow(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        private void ExecuteOpenConsole(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
             var client = e.Parameter as ClientTracker;
-            client.GetWindow().Focus();
+            client.GetConsole().Focus();
+        }
+
+        private void ExecuteOpenInspector(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            var client = e.Parameter as ClientTracker;
+            client.GetInspector().Focus();
         }
 
         private void Connect(string host, ushort port)
@@ -67,7 +73,7 @@ namespace ironfrost
                Otherwise, we could race on it changing role. */ 
             Task.Run(client.RunAsync);
 
-            ct.GetWindow().Focus();
+            ct.GetConsole().Focus();
         }
     }
 }

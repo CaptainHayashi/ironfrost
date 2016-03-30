@@ -18,6 +18,8 @@ namespace ironfrost
     {
         private ClientSocket socket;
 
+        public event MessageSendHandler RecvMessage;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public IClientRole Role { get; private set; }
@@ -59,7 +61,8 @@ namespace ironfrost
         private void ProcessLine(List<string> line)
         {
             var msg = new Message(line);
-            Role.HandleMessage(msg);
+
+            RecvMessage?.Invoke(this, msg);
         }
 
         /// <summary>
@@ -99,6 +102,7 @@ namespace ironfrost
             {
                 oldRole.SendMessage -= MessageSocket;
                 oldRole.Change -= ChangeRole;
+                RecvMessage -= oldRole.HandleMessage;
             }
 
             Role = newRole;
@@ -107,6 +111,7 @@ namespace ironfrost
             {
                 Role.SendMessage += MessageSocket;
                 Role.Change += ChangeRole;
+                RecvMessage += Role.HandleMessage;
             }
 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Role"));

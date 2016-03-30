@@ -7,7 +7,10 @@ namespace ironfrost
     /// </summary>
     class Commands
     {
-        public static readonly RoutedUICommand OpenClientWindow =
-            new RoutedUICommand("Open Panel", "OpenClientWindow", typeof(Commands));
+        public static readonly RoutedUICommand OpenConsole =
+            new RoutedUICommand("Open Console", "OpenConsole", typeof(Commands));
+
+        public static readonly RoutedUICommand OpenInspector =
+            new RoutedUICommand("Open Inspector", "OpenInspector", typeof(Commands));
     }
 }

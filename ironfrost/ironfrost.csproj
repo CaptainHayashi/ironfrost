@@ -88,6 +88,9 @@
     <Compile Include="ConnectDialog.xaml.cs">
       <DependentUpon>ConnectDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="inspector\Inspector.xaml.cs">
+      <DependentUpon>Inspector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -120,6 +123,10 @@
     <Page Include="console\InitialControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="inspector\Inspector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>

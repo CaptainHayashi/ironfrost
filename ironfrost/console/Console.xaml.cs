@@ -12,28 +12,18 @@ namespace ironfrost
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string ClientName { get; private set; }
-        public ObservableCollection<Message> Msgs { get; }
+        public UserControl SnapIn { get; private set; }
 
-        public void NewMessage(Message msg)
-        {
-            Msgs.Add(msg);
-        }
+        public string ClientName { get; private set; }
 
         public void Ohai(Ohai ohai)
         {
             ClientName = $"{ohai.clientID}@{ClientName}/{ohai.serverID} [{ohai.protocolID}]";
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("ClientName"));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ClientName"));
         }
 
         public void Change(IClientRole newRole)
         {
-            // TODO(CaptainHayashi): transition to ClientTracker.
-            newRole.RecvMessage += (obj, msg) => Dispatcher.Invoke(() => NewMessage(msg));
-
             UserControl ctl = null;
             if (newRole is InitialClientRole)
             {
@@ -50,7 +40,8 @@ namespace ironfrost
                 ctl = new NullControl(newRole);
             }
 
-            tabControls.Content = ctl;
+            SnapIn = ctl;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SnapIn"));
         }
 
         public Console(string name, IClientRole role)
@@ -58,7 +49,6 @@ namespace ironfrost
             InitializeComponent();
 
             ClientName = name;
-            Msgs = new ObservableCollection<Message>();
 
             DataContext = this;
 

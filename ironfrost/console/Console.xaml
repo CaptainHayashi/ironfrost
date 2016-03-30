@@ -6,41 +6,7 @@
         xmlns:local="clr-namespace:ironfrost"
         mc:Ignorable="d"
         Title="{Binding ClientName}" Height="350" Width="525">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TabControl Grid.Row="0">
-            <TabItem x:Name="tabControls" Header="Controls">
-            </TabItem>
-            <TabItem x:Name="tabMessages" Header="Messages">
-                <DataGrid x:Name="msgGrid" AutoGenerateColumns="False" ItemsSource="{Binding Msgs}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Tag}" ClipboardContentBinding="{x:Null}" Header="Tag"/>
-                        <DataGridTextColumn Binding="{Binding Word}" ClipboardContentBinding="{x:Null}" Header="Command"/>
-                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Payload">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ListView x:Name="listView" ItemsSource="{Binding Args}">
-                                        <ListView.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal"/>
-                                            </ItemsPanelTemplate>
-                                        </ListView.ItemsPanel>
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <WrapPanel>
-                                                    <TextBlock Text="{Binding}" />
-                                                </WrapPanel>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </TabItem>
-        </TabControl>
-    </Grid>
+    <DockPanel Name="consolePanel">
+        <ContentControl Name="consoleSnapin" Content="{Binding SnapIn}" />
+    </DockPanel>
 </Window>

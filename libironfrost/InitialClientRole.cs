@@ -10,7 +10,6 @@ namespace ironfrost
     public class InitialClientRole : IClientRole
     {
         public event RoleChangeHandler Change;
-        public event MessageSendHandler RecvMessage;
         public event MessageSendHandler SendMessage;
 
         /// <summary>
@@ -40,13 +39,8 @@ namespace ironfrost
             }
         }
 
-        public void HandleMessage(Message msg)
+        public void HandleMessage(object sender, Message msg)
         {
-            if (RecvMessage != null)
-            {
-                RecvMessage(this, msg);
-            }
-
             if (msg.Word == "OHAI")
             {
                 HandleOhai(msg.Args);

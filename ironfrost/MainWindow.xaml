@@ -9,9 +9,11 @@
         Title="Ironfrost"
         Height="300" Width="300">
     <Window.CommandBindings>
-            <CommandBinding Command="local:Commands.OpenClientWindow"
-                        Executed="ExecuteOpenClientWindow" />
-            <CommandBinding Command="ApplicationCommands.New"
+        <CommandBinding Command="local:Commands.OpenConsole"
+                        Executed="ExecuteOpenConsole" />
+        <CommandBinding Command="local:Commands.OpenInspector"
+                        Executed="ExecuteOpenInspector" />
+        <CommandBinding Command="ApplicationCommands.New"
                         Executed="ExecuteConnect" />
     </Window.CommandBindings>
     <DockPanel>
@@ -29,8 +31,13 @@
                     <GridViewColumn Header="Actions">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Height="10pt" ToolTip="Open the presenter console for this client."
-                                        Command="local:Commands.OpenClientWindow" CommandParameter="{Binding}" Content="Console" />
+                                <WrapPanel>
+                                    <Button Height="32px" ToolTip="Open the presenter console for this client."
+                                            Command="local:Commands.OpenConsole" CommandParameter="{Binding}" Content="Console" />
+
+                                    <Button Height="32px" ToolTip="Open the inspector for this client."
+                                            Command="local:Commands.OpenInspector" CommandParameter="{Binding}" Content="Inspector" />
+                                </WrapPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
