@@ -36,12 +36,12 @@ namespace ironfrost
         {
             if (e.PropertyName == "Role")
             {
-                var newRole = Client.Role;
-
-                var wnd = window;
-                if (wnd != null)
+                // Lock to prevent races with other attempts to use the window.
+                lock (this)
                 {
-                    wnd.Dispatcher.Invoke(() => wnd.Change(newRole));
+                    var newRole = Client.Role;
+                    var wnd = window;
+                    wnd?.Dispatcher.Invoke(() => wnd.Change(newRole));
                 }
             }
         }
@@ -57,9 +57,13 @@ namespace ironfrost
         {
             if (window == null)
             {
-                window = new ClientWindow(Client.Name, Client.Role);
-                window.Closed += (obj, e) => { window = null; };
-                window.Show();
+                // Lock to prevent races with things trying to use the window.
+                lock (this)
+                {
+                    window = new ClientWindow(Client.Name, Client.Role);
+                    window.Closed += (obj, e) => { window = null; };
+                    window.Show();
+                }
             }
 
             return window;
