@@ -36,6 +36,29 @@ namespace ironfrost
         }
 
         /// <summary>
+        ///     Builds a new <c>Client</c> with the given host and port.
+        /// </summary>
+        /// <param name="host">
+        ///     The hostname on which the target server is listening.
+        /// </param>
+        /// <param name="port">
+        ///     The port on which the target server is listening.
+        /// </param>
+        /// <returns>
+        ///     A <c>Client</c> with sensible values for its socket and
+        ///     role, based on <paramref name="host"/> and
+        ///     <paramref name="port"/>.
+        /// </returns>
+        public static Client FromHostAndPort(string host, ushort port)
+        {
+            var tok = new Tokeniser();
+            var socket = new ClientSocket(host, port, tok);
+            var role = new InitialClientRole();
+
+            return new Client(socket, role);
+        }
+
+        /// <summary>
         ///     Creates a new <c>Client</c>.
         /// </summary>
         /// <param name="socket">

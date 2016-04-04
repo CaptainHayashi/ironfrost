@@ -50,22 +50,8 @@ namespace ironfrost
 
         private void Connect(string host, ushort port)
         {
-            var tok = new Tokeniser();
+            var client = Client.FromHostAndPort(host, port);
 
-            ClientSocket bc;
-            try
-            {
-                bc = new ClientSocket(host, port, tok);
-            }
-            catch (System.Net.Sockets.SocketException ex)
-            {
-                System.Console.Out.WriteLine(ex.ToString());
-                throw;
-            }
-
-            var rl = new InitialClientRole();
-
-            var client = new Client(bc, rl);
             var ct = new ClientTracker(client);
             Clients.Add(ct);
 
