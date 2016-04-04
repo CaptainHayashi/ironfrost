@@ -28,20 +28,9 @@ namespace ironfrost
         private Console console = null;
 
         /// <summary>
-        ///   Lock used to serialise accesses to <c>console</c>.
-        /// </summary>
-        private object consoleLock = new object();
-
-
-        /// <summary>
         ///   Holder for the client inspector, if it is open.
         /// </summary>
         private Inspector inspector = null;
-
-        /// <summary>
-        ///   Lock used to serialise accesses to <c>console</c>.
-        /// </summary>
-        private object inspectorLock = new object();
 
         /// <summary>
         ///   Constructs a new <c>ClientTracker</c>.
@@ -61,13 +50,9 @@ namespace ironfrost
         {
             if (e.PropertyName == "Role")
             {
-                // Lock to prevent races with other attempts to use the window.
-                lock (consoleLock)
-                {
-                    var newRole = Client.Role;
-                    var wnd = console;
-                    wnd?.Dispatcher.Invoke(() => wnd.Change(newRole));
-                }
+                Application.Current.Dispatcher.Invoke(() =>
+                    console?.Change(Client.Role)
+                );
             }
         }
 
@@ -82,13 +67,14 @@ namespace ironfrost
         {
             if (console == null)
             {
-                // Lock to prevent races with things trying to use the window.
-                lock (consoleLock)
+                // Synchronise with the UI thread.
+                // This is to prevent races with things trying to use the window.
+                Application.Current.Dispatcher.Invoke(() =>
                 {
                     console = new Console(Client.Name, Client.Role);
                     console.Closed += (obj, e) => { console = null; };
                     console.Show();
-                }
+                });
             }
 
             return console;
@@ -106,12 +92,12 @@ namespace ironfrost
             if (inspector == null)
             {
                 // Lock to prevent races with things trying to use the window.
-                lock (inspectorLock)
+                Application.Current.Dispatcher.Invoke(() =>
                 {
                     inspector = new Inspector(this);
                     inspector.Closed += (obj, e) => { inspector = null; };
                     inspector.Show();
-                }
+                });
             }
 
             return inspector;
