@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 namespace ironfrost
 {
     /// <summary>
-    ///   A low-level Bifrost client.
+    ///   A low-level TCP Bifrost client.
     ///
     ///   <para>
     ///     <c>Client</c> allows Bifrost messages to be read and written as
     ///     lists of strings over TCP.
     ///   </para>
     /// </summary>
-    public class ClientSocket
+    public class TCPClientSocket : IClientSocket
     {
         public delegate Task RespondAsync(IEnumerable<string> command);
 
@@ -29,7 +29,7 @@ namespace ironfrost
         private byte[] buffer;
         private Tokeniser tok;
 
-        public ClientSocket(string host, ushort port, Tokeniser tok)
+        public TCPClientSocket(string host, ushort port, Tokeniser tok)
         {
             Name = $"{host}:{port}";
 

@@ -40,13 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IClientSocket.cs" />
     <Compile Include="PlayerClientRole.cs" />
     <Compile Include="NullClientRole.cs" />
     <Compile Include="Ohai.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="IClientRole.cs" />
     <Compile Include="InitialClientRole.cs" />
-    <Compile Include="ClientSocket.cs" />
+    <Compile Include="TcpClientSocket.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Packer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

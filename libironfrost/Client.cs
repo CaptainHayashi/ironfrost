@@ -9,14 +9,14 @@ namespace ironfrost
     ///
     ///     <para>
     ///         A <c>Client</c> combines a <c>ClientRole</c> and a
-    ///         <c>ClientSocket</c> to represent an entire Bifrost client,
+    ///         <c>TCPClientSocket</c> to represent an entire Bifrost client,
     ///         using the <c>ClientRole</c> for behaviour and
-    ///         <c>ClientSocket</c> for communication respectively.
+    ///         <c>TCPClientSocket</c> for communication respectively.
     ///      </para>
     /// </summary>
     public class Client : INotifyPropertyChanged
     {
-        private ClientSocket socket;
+        private IClientSocket socket;
 
         public event MessageSendHandler RecvMessage;
 
@@ -52,7 +52,7 @@ namespace ironfrost
         public static Client FromHostAndPort(string host, ushort port)
         {
             var tok = new Tokeniser();
-            var socket = new ClientSocket(host, port, tok);
+            var socket = new TCPClientSocket(host, port, tok);
             var role = new InitialClientRole();
 
             return new Client(socket, role);
@@ -62,12 +62,12 @@ namespace ironfrost
         ///     Creates a new <c>Client</c>.
         /// </summary>
         /// <param name="socket">
-        ///     The <c>ClientSocket</c> to read to and write from.
+        ///     The <c>IClientSocket</c> to read to and write from.
         /// </param>
         /// <param name="role">
         ///     The <c>Role</c> to pass messages to and from.
         /// </param>
-        public Client(ClientSocket socket, IClientRole role)
+        public Client(IClientSocket socket, IClientRole role)
         {
             this.socket = socket;
             this.socket.LineEvent += ProcessLine;
@@ -76,7 +76,7 @@ namespace ironfrost
         }
 
         /// <summary>
-        ///   Processes a line from the <c>ClientSocket</c>.
+        ///   Processes a line from the <c>TCPClientSocket</c>.
         /// </summary>
         /// <param name="line">
         ///   The line to process.
