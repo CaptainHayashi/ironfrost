@@ -15,6 +15,16 @@ namespace ironfrost
     /// </summary>
     public class TCPClientSocket : IClientSocket
     {
+        /// <summary>
+        ///   The fixed size of the input buffer, in bytes.
+        /// <summary> 
+        const int InputBufferSize = 4096;
+        
+        /// <summary>
+        ///   The initial size of the output buffer, in bytes.
+        /// <summary> 
+        const int OutputBufferSize = 1024;
+        
         public delegate Task RespondAsync(IEnumerable<string> command);
 
         public string Name { get; }
@@ -35,7 +45,7 @@ namespace ironfrost
 
             client = new System.Net.Sockets.TcpClient(host, port);
             stream = client.GetStream();
-            buffer = new byte[4096];
+            buffer = new byte[InputBufferSize];
             this.tok = tok;
             this.tok.LineEvent += GotLine;
         }
@@ -53,7 +63,7 @@ namespace ironfrost
 
         public async Task WriteAsync(IEnumerable<string> command)
         {
-            using (var mbuf = new MemoryStream(1024))
+            using (var mbuf = new MemoryStream(OutputBufferSize))
             {
                 var packer = new Packer(mbuf);
                 packer.Pack(command);

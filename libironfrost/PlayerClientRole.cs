@@ -30,6 +30,16 @@ namespace ironfrost
             /// </summary>
             Unknown
         }
+        
+        /// <summary>
+        ///   Number of Bifrost time units in a millisecond.
+        ///
+        ///   <para>
+        ///     Bifrost uses microseconds as its time unit, at the time
+        ///     of writing.
+        ///   </para>
+        /// </summary>
+        const int TimeUnitsInMsec = 1000;
 
         public event RoleChangeHandler Change;
         public event MessageSendHandler SendMessage;
@@ -56,7 +66,7 @@ namespace ironfrost
         {
             get
             {
-                return TimeSpan.FromMilliseconds(Pos / 1000);
+                return TimeSpan.FromMilliseconds(Pos / TimeUnitsInMsec);
             }
         }
 
