@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -37,7 +36,7 @@ namespace ironfrost
             }
             else
             {
-                ctl = new NullControl(newRole);
+                ctl = new ErrorControl(newRole);
             }
 
             SnapIn = ctl;

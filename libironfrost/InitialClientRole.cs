@@ -1,5 +1,3 @@
-using System;
-
 namespace ironfrost
 {
     /// <summary>
@@ -81,21 +79,18 @@ namespace ironfrost
         {
             // TODO(CaptainHayashi): check size
 
-            IClientRole newRole = new NullClientRole(args[0]);
-
+            IClientRole newRole;
             switch (args[0])
             {
                 case "player/file":
                     newRole = new PlayerClientRole();
                     break;
                 default:
+                    newRole = new ErrorClientRole(ClientError.UnknownRole, args[0]);
                     break;
             }
 
-            if (Change != null)
-            {
-                Change(this, newRole);
-            }
+            Change?.Invoke(this, newRole);
         }
     }
 }

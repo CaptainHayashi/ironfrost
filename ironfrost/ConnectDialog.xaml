@@ -29,14 +29,14 @@
                Target="{Binding ElementName=txtHost}" />
         <TextBox Grid.Row="0" Grid.Column="2" MinWidth="150" Margin="0 0 0 10"
                  Name="txtHost"
-                 Text="{Binding Host}" />
+                 Text="{Binding Host, Mode=TwoWay}" />
 
         <Label Grid.Row="1" Grid.Column="1"
                Content="_Port:" 
                Target="{Binding ElementName=iudPort}" />
         <xctk:IntegerUpDown Grid.Row="1" Grid.Column="2" MinWidth="150"
                             Name="iudPort" Minimum="0" Maximum="65535"
-                            Text="{Binding Port}" />
+                            Text="{Binding Port, Mode=TwoWay}" />
 
         <WrapPanel Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Right" Margin="0 15 0 0">
             <Button Name="btnConnect" IsDefault="True" MinWidth="60" Margin="0 0 10 0" Content="Connect" Click="btnConnect_Click" />

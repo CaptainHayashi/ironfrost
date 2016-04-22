@@ -98,8 +98,8 @@
     <Compile Include="console\InitialControl.xaml.cs">
       <DependentUpon>InitialControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="console\NullControl.xaml.cs">
-      <DependentUpon>NullControl.xaml</DependentUpon>
+    <Compile Include="console\ErrorControl.xaml.cs">
+      <DependentUpon>ErrorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="console\PlayerControl.xaml.cs">
       <DependentUpon>PlayerControl.xaml</DependentUpon>
@@ -132,7 +132,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="console\NullControl.xaml">
+    <Page Include="console\ErrorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -52,8 +52,19 @@ namespace ironfrost
         public static Client FromHostAndPort(string host, ushort port)
         {
             var tok = new Tokeniser();
-            var socket = new TCPClientSocket(host, port, tok);
-            var role = new InitialClientRole();
+
+            IClientSocket socket;
+            IClientRole role;
+
+            try
+            {
+                socket = new TCPClientSocket(host, port, tok);
+                role = new InitialClientRole();
+            } catch (System.Net.Sockets.SocketException e)
+            {
+                socket = new NullClientSocket();
+                role = new ErrorClientRole(ClientError.CannotConnect, e.Message);
+            }
 
             return new Client(socket, role);
         }

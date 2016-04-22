@@ -1,23 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace ironfrost
 {
     /// <summary>
     ///   Container for connection information.
     /// </summary>
-    public struct ConnectionDetails
+    public class ConnectionDetails
     {
         /// <summary>
         ///   The host to connect to.
@@ -28,6 +16,21 @@ namespace ironfrost
         ///   The port to connect to.
         /// </summary>
         public int Port { get; set; }
+
+        /// <summary>
+        ///   Constructs a new <c>ConnectionDetails</c>.
+        /// </summary>
+        /// <param name="host">
+        ///   The hostname to be connected to.
+        /// </param>
+        /// <param name="port">
+        ///   The TCP port on the hostname to connect to.
+        /// </param>
+        public ConnectionDetails(string host, int port)
+        {
+            Host = host;
+            Port = port;
+        }
     }
 
     /// <summary>
@@ -35,7 +38,7 @@ namespace ironfrost
     /// </summary>
     public partial class ConnectDialog : Window
     {
-        public ConnectionDetails Connection;
+        public ConnectionDetails Connection { get; }
 
         /// <summary>
         ///   Constructs a new <c>ConnectDialog</c>.
@@ -48,11 +51,9 @@ namespace ironfrost
         /// </param>
         public ConnectDialog(string defaultHost, int defaultPort)
         {
-            Connection.Host = defaultHost;
-            Connection.Port = defaultPort;
-            DataContext = Connection;
-
+            Connection = new ConnectionDetails(defaultHost, defaultPort);
             InitializeComponent();
+            DataContext = Connection;
         }
 
         private void btnConnect_Click(object sender, RoutedEventArgs e)

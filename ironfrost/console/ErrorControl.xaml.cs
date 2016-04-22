@@ -4,16 +4,16 @@
 namespace ironfrost
 {
     /// <summary>
-    /// Interaction logic for NullControl.xaml
+    /// Interaction logic for ErrorControl.xaml
     /// </summary>
-    public partial class NullControl : UserControl
+    public partial class ErrorControl : UserControl
     {
         /// <summary>
-        ///   The Role connected to this <c>NullControl</c>.
+        ///   The Role connected to this <c>ErrorControl</c>.
         /// </summary>
         public IClientRole Role { get; }
 
-        public NullControl(IClientRole role)
+        public ErrorControl(IClientRole role)
         {
             Role = role;
             DataContext = role;
