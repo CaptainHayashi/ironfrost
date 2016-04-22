@@ -78,19 +78,32 @@ namespace ironfrost
         private void HandleIama(string[] args)
         {
             // TODO(CaptainHayashi): check size
-
-            IClientRole newRole;
-            switch (args[0])
+            IClientRole newRole = RoleFromName(args[0]);
+            Change?.Invoke(this, newRole);
+        }
+        
+        /// <summary>
+        ///   Selects a <c>IClientRole</c> based on a role string.
+        ///
+        ///   <para>
+        ///     If the role is not known, we return <c>ErrorClientRole</c>.
+        ///   </para>
+        /// </summary>
+        /// <param name="roleName">
+        ///   The name of the intended role.
+        /// </param>
+        /// <returns>
+        ///   An <c>IClientRole</c> that best matches <paramref name="roleName"/>.
+        /// </returns>
+        private IClientRole RoleFromName(string roleName)
+        {
+            switch (roleName)
             {
                 case "player/file":
-                    newRole = new PlayerClientRole();
-                    break;
+                    return new PlayerClientRole();
                 default:
-                    newRole = new ErrorClientRole(ClientError.UnknownRole, args[0]);
-                    break;
+                    return new ErrorClientRole(ClientError.UnknownRole, roleName);
             }
-
-            Change?.Invoke(this, newRole);
         }
     }
 }
