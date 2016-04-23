@@ -12,7 +12,18 @@ namespace ironfrost
 
         event Tokeniser.LineHandler LineEvent;
 
-        Task ReadAsync();
+        /// <summary>
+        ///   Requests a read on this <c>IClientSocket</c>.
+        ///
+        ///   <para>
+        ///     This may trigger <c>LineEvent</c> if the socket has managed to
+        ///     read a complete line.
+        ///   </para>
+        /// </summary>
+        /// <returns>
+        ///   True if the socket still has more to read.
+        /// </returns>
+        Task<bool> ReadAsync();
         Task WriteAsync(IEnumerable<string> command);
     }
 }

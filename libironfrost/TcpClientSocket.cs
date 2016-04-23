@@ -55,10 +55,11 @@ namespace ironfrost
             LineEvent?.Invoke(line);
         }
 
-        public async Task ReadAsync()
+        public async Task<bool> ReadAsync()
         {
             int nread = await stream.ReadAsync(buffer, 0, buffer.Length);
             tok.Feed(buffer.Take(nread));
+            return (nread > 0);
         }
 
         public async Task WriteAsync(IEnumerable<string> command)

@@ -21,9 +21,10 @@ namespace ironfrost
             // Intentionally left blank.
         }
 
-        public async Task ReadAsync()
+        public async Task<bool> ReadAsync()
         {
             // Intentionally left blank.
+            return true;
         }
 
         public async Task WriteAsync(IEnumerable<string> command)

@@ -104,10 +104,12 @@ namespace ironfrost
         /// </summary>
         public async Task RunAsync()
         {
-            while (true)
+            bool running = true;
+            while (running)
             {
-                await socket.ReadAsync();
+                running = await socket.ReadAsync();
             }
+            // TODO(CaptainHayashi): signal EOF
         }
 
         /// <summary>
