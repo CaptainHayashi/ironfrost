@@ -1,9 +1,9 @@
-﻿<Window x:Name="inspector" x:Class="ironfrost.Inspector"
+﻿<Window x:Name="inspector" x:Class="Ironfrost.Inspector"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ironfrost"
+        xmlns:local="clr-namespace:Ironfrost"
         mc:Ignorable="d"
         Title="{Binding ClientName}" Height="350" Width="525">
     <Grid>

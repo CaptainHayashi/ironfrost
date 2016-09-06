@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ironfrost
+namespace Ironfrost
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

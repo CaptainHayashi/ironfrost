@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace ironfrost
+﻿namespace Ironfrost
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     /// <summary>
     ///   Interface for low-level socket connections to Bifrost servers.
     /// </summary>
@@ -24,6 +24,7 @@ namespace ironfrost
         ///   True if the socket still has more to read.
         /// </returns>
         Task<bool> ReadAsync();
+
         Task WriteAsync(IEnumerable<string> command);
     }
 }

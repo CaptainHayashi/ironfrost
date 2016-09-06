@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ironfrost.Properties
+namespace Ironfrost.Properties
 {
 
 

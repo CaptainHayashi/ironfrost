@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 
-namespace ironfrost
+namespace Ironfrost
 {
     /// <summary>
     ///   A client role for Bifrost 'player/file' roles.
@@ -41,7 +41,10 @@ namespace ironfrost
         /// </summary>
         const int TimeUnitsInMsec = 1000;
 
-        public event RoleChangeHandler Change;
+        public event RoleChangeHandler Change {
+            add { }
+            remove { }
+        }
         public event MessageSendHandler SendMessage;
         public event PropertyChangedEventHandler PropertyChanged;
 

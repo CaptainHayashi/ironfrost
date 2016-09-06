@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace ironfrost
+namespace Ironfrost
 {
     /// <summary>
     /// Interaction logic for App.xaml

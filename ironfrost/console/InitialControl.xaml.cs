@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace ironfrost
+namespace Ironfrost
 {
     /// <summary>
     /// Interaction logic for InitialControl.xaml

@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ironfrost
+namespace Ironfrost
 {
     /// <summary>
     ///   A low-level TCP Bifrost client.

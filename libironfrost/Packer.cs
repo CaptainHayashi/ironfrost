@@ -3,7 +3,7 @@ using System.Text;
 using System.IO;
 using System.Linq;
 
-namespace ironfrost
+namespace Ironfrost
 {
     /// <summary>
     ///   Class for packing Bifrost messages into byte streams.

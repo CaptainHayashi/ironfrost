@@ -4,10 +4,10 @@ using FontAwesome.WPF;
 using System.Windows;
 using System.Globalization;
 
-namespace ironfrost
+namespace Ironfrost
 {
     /// <summary>
-    ///   Value converter changing state enums into FontAwesome icons.
+    ///   Value converter changing player states into FontAwesome icons.
     /// </summary>
     public class PlayerStateToFAConverter : IValueConverter
     {

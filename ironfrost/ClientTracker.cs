@@ -2,26 +2,13 @@
 using System.ComponentModel;
 using System.Windows;
 
-namespace ironfrost
+namespace Ironfrost
 {
     /// <summary>
     ///   Tracker containing a Client and its associated windows.
     /// </summary>
     public class ClientTracker
     {
-        public Client Client { get; }
-
-        public string Name { get { return Client.Name; } }
-        public IClientRole Role { get { return Client.Role; } }
-
-        public ObservableCollection<Message> Msgs { get; } = new ObservableCollection<Message>();
-
-        public void NewMessage(object sender, Message msg)
-        {
-            // This has to be done on the UI dispatcher to avoid races.
-            Application.Current.Dispatcher.Invoke(() => Msgs.Add(msg));
-        }
-
         /// <summary>
         ///   Holder for the client console, if it is open.
         /// </summary>
@@ -46,14 +33,15 @@ namespace ironfrost
             Client.RecvMessage += NewMessage;
         }
 
-        private void OnClientChange(object sender, PropertyChangedEventArgs e)
+        public Client Client { get; }
+        public string Name { get { return Client.Name; } }
+        public IClientRole Role { get { return Client.Role; } }
+        public ObservableCollection<Message> Msgs { get; } = new ObservableCollection<Message>();
+
+        public void NewMessage(object sender, Message msg)
         {
-            if (e.PropertyName == "Role")
-            {
-                Application.Current.Dispatcher.Invoke(() =>
-                    console?.Change(Client.Role)
-                );
-            }
+            // This has to be done on the UI dispatcher to avoid races.
+            Application.Current.Dispatcher.Invoke(() => Msgs.Add(msg));
         }
 
         /// <summary>
@@ -101,6 +89,16 @@ namespace ironfrost
             }
 
             return inspector;
+        }
+
+        private void OnClientChange(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Role")
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                    console?.Change(Client.Role)
+                );
+            }
         }
     }
 }

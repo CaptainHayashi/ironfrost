@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace ironfrost
+namespace Ironfrost
 {
     /// <summary>
     ///     Interaction logic for PlayerControl.xaml
@@ -55,6 +55,11 @@ namespace ironfrost
             }
         }
 
+        /// <summary>
+        ///     Executes the Load command.
+        /// </summary>
+        /// <param name="sender">The object sending the execute request.</param>
+        /// <param name="e">The set of arguments for the execution.</param>
         private void ExecuteLoad(object sender, ExecutedRoutedEventArgs e)
         {
             var dlg = new Microsoft.Win32.OpenFileDialog();
@@ -67,41 +72,81 @@ namespace ironfrost
             }
         }
 
+        /// <summary>
+        ///     Updates the can-execute status of the Eject command.
+        /// </summary>
+        /// <param name="sender">The object sending the can-execute request.</param>
+        /// <param name="e">The target of the update.</param>
         private void CanEject(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = Role.State != PlayerClientRole.PlayerState.Ejected;
         }
 
+        /// <summary>
+        ///     Executes the Eject command.
+        /// </summary>
+        /// <param name="sender">The object sending the execute request.</param>
+        /// <param name="e">The set of arguments for the execution.</param>
         private void ExecuteEject(object sender, ExecutedRoutedEventArgs e)
         {
             Role.RequestEject();
         }
 
+        /// <summary>
+        ///     Updates the can-execute status of the Play command.
+        /// </summary>
+        /// <param name="sender">The object sending the can-execute request.</param>
+        /// <param name="e">The target of the update.</param>
         private void CanPlay(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = Role.State == PlayerClientRole.PlayerState.Stopped;
         }
 
+        /// <summary>
+        ///     Executes the Play command.
+        /// </summary>
+        /// <param name="sender">The object sending the execute request.</param>
+        /// <param name="e">The set of arguments for the execution.</param>
         private void ExecutePlay(object sender, ExecutedRoutedEventArgs e)
         {
             Role.RequestPlay();
         }
 
+        /// <summary>
+        ///     Updates the can-execute status of the Stop command.
+        /// </summary>
+        /// <param name="sender">The object sending the can-execute request.</param>
+        /// <param name="e">The target of the update.</param>
         private void CanStop(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = Role.State == PlayerClientRole.PlayerState.Playing;
         }
 
+        /// <summary>
+        ///     Executes the Stop command.
+        /// </summary>
+        /// <param name="sender">The object sending the execute request.</param>
+        /// <param name="e">The set of arguments for the execution.</param>
         private void ExecuteStop(object sender, ExecutedRoutedEventArgs e)
         {
             Role.RequestStop();
         }
 
+        /// <summary>
+        ///     Updates the can-execute status of the End command.
+        /// </summary>
+        /// <param name="sender">The object sending the can-execute request.</param>
+        /// <param name="e">The target of the update.</param>
         private void CanEnd(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = Role.State != PlayerClientRole.PlayerState.Ejected;
         }
 
+        /// <summary>
+        ///     Executes the End command.
+        /// </summary>
+        /// <param name="sender">The object sending the execute request.</param>
+        /// <param name="e">The set of arguments for the execution.</param>
         private void ExecuteEnd(object sender, ExecutedRoutedEventArgs e)
         {
             Role.RequestEnd();

@@ -1,31 +1,67 @@
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
-
-namespace ironfrost
+//-----------------------------------------------------------------------
+// <copyright file="Client.cs" company="University Radio York">
+//     Copyright 2016 University Radio York, licenced under MIT.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace Ironfrost
 {
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Threading.Tasks;
+
     /// <summary>
-    ///     A high-level Bifrost client.
-    ///
+    ///     A high-level client.
     ///     <para>
-    ///         A <c>Client</c> combines a <c>ClientRole</c> and a
-    ///         <c>TCPClientSocket</c> to represent an entire Bifrost client,
-    ///         using the <c>ClientRole</c> for behaviour and
-    ///         <c>TCPClientSocket</c> for communication respectively.
+    ///         A <see cref="Client"/> combines an <see cref="IClientRole"/>
+    ///         and a <see cref="IClientSocket"/> to represent an entire
+    ///         client.
     ///      </para>
     /// </summary>
     public class Client : INotifyPropertyChanged
     {
+        /// <summary>
+        ///     The <see cref="IClientSocket"/> used to talk to the server
+        ///     itself.
+        /// </summary>
         private IClientSocket socket;
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="Client"/> class.
+        /// </summary>
+        /// <param name="socket">
+        ///     The <c>IClientSocket</c> to read to and write from.
+        /// </param>
+        /// <param name="role">
+        ///     The <c>Role</c> to pass messages to and from.
+        /// </param>
+        public Client(IClientSocket socket, IClientRole role)
+        {
+            this.socket = socket;
+            this.socket.LineEvent += ProcessLine;
+
+            ChangeRole(null, role);
+        }
+        
+        /// <summary>
+        ///     Event sent when the <see cref="Client"/> receives a message.
+        /// </summary>
         public event MessageSendHandler RecvMessage;
 
+        /// <summary>
+        ///     Event sent when a property changes on the <c>Client</c>.
+        ///     <para>
+        ///         This will be <see cref="Role"/> or <see cref="Name"/>.
+        ///     </para>
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        ///     Gets the current client role.
+        /// </summary>
         public IClientRole Role { get; private set; }
 
         /// <summary>
-        ///   The name of this Client.
+        ///   Gets the name of this Client.
         /// </summary>
         public string Name
         {
@@ -60,7 +96,8 @@ namespace ironfrost
             {
                 socket = new TCPClientSocket(host, port, tok);
                 role = new InitialClientRole();
-            } catch (System.Net.Sockets.SocketException e)
+            }
+            catch (System.Net.Sockets.SocketException e)
             {
                 socket = new NullClientSocket();
                 role = new ErrorClientRole(ClientError.CannotConnect, e.Message);
@@ -70,20 +107,20 @@ namespace ironfrost
         }
 
         /// <summary>
-        ///     Creates a new <c>Client</c>.
+        ///     Runs the <see cref="Client"/>.
         /// </summary>
-        /// <param name="socket">
-        ///     The <c>IClientSocket</c> to read to and write from.
-        /// </param>
-        /// <param name="role">
-        ///     The <c>Role</c> to pass messages to and from.
-        /// </param>
-        public Client(IClientSocket socket, IClientRole role)
+        /// <returns>
+        ///     A <see cref="Task"/> representing the running <see cref="Client"/>.
+        /// </returns>
+        public async Task RunAsync()
         {
-            this.socket = socket;
-            this.socket.LineEvent += ProcessLine;
+            bool running = true;
+            while (running)
+            {
+                running = await socket.ReadAsync();
+            }
 
-            ChangeRole(null, role);
+            // TODO(CaptainHayashi): signal EOF
         }
 
         /// <summary>
@@ -100,21 +137,8 @@ namespace ironfrost
         }
 
         /// <summary>
-        ///     Runs the <c>Client</c>.
-        /// </summary>
-        public async Task RunAsync()
-        {
-            bool running = true;
-            while (running)
-            {
-                running = await socket.ReadAsync();
-            }
-            // TODO(CaptainHayashi): signal EOF
-        }
-
-        /// <summary>
         ///     Event handler for sending messages to the socket.
-        /// <summary>
+        /// </summary>
         /// <param name="obj">
         ///     The originating object (usually <c>role</c>).
         /// </param>
@@ -129,6 +153,9 @@ namespace ironfrost
         /// <summary>
         ///     Event handler for changing roles.
         /// </summary>
+        /// <param name="oldRole">
+        ///     The existing <c>ClientRole</c>.
+        /// </param>
         /// <param name="newRole">
         ///     The new <c>ClientRole</c>.
         /// </param>

@@ -1,4 +1,4 @@
-namespace ironfrost
+namespace Ironfrost
 {
     /// <summary>
     ///   Delegate for hooking up OHAI notifications.

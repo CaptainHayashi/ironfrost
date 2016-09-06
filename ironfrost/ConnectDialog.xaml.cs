@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace ironfrost
+namespace Ironfrost
 {
     /// <summary>
     ///   Container for connection information.

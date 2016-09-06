@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace ironfrost
+namespace Ironfrost
 {
     /// <summary>
     ///   A Bifrost protocol tokeniser.

@@ -1,4 +1,4 @@
-namespace ironfrost
+namespace Ironfrost
 {
     /// <summary>
     ///   A client role that listens to the initial responses of a client
@@ -8,7 +8,12 @@ namespace ironfrost
     public class InitialClientRole : IClientRole
     {
         public event RoleChangeHandler Change;
-        public event MessageSendHandler SendMessage;
+
+        public event MessageSendHandler SendMessage
+        {
+            add { }
+            remove { }
+        }
 
         /// <summary>
         ///   Event fired when the role gets an OHAI response.
@@ -21,7 +26,7 @@ namespace ironfrost
         private Ohai ohai;
 
         /// <summary>
-        ///   The name of the Bifrost role associated with this
+        ///   Gets the name of the Bifrost role associated with this
         ///   <c>InitialClientRole</c>.
         ///   
         ///   <para>
@@ -33,7 +38,7 @@ namespace ironfrost
         {
             get
             {
-                return "";
+                return string.Empty;
             }
         }
 
@@ -84,16 +89,15 @@ namespace ironfrost
         
         /// <summary>
         ///   Selects a <c>IClientRole</c> based on a role string.
-        ///
         ///   <para>
-        ///     If the role is not known, we return <c>ErrorClientRole</c>.
+        ///       If the role is not known, we return <c>ErrorClientRole</c>.
         ///   </para>
         /// </summary>
         /// <param name="roleName">
-        ///   The name of the intended role.
+        ///     The name of the intended role.
         /// </param>
         /// <returns>
-        ///   An <c>IClientRole</c> that best matches <paramref name="roleName"/>.
+        ///     An <c>IClientRole</c> that best matches <paramref name="roleName"/>.
         /// </returns>
         private IClientRole RoleFromName(string roleName)
         {
