@@ -18,12 +18,34 @@
             <GridView x:Name="studioView" ItemsSource="{x:Bind Studios}">
                 <GridView.ItemTemplate>
                     <DataTemplate x:DataType="model:Studio">
-                        <StackPanel Margin="20" Width="300">
-                            <TextBlock Text="{Binding Name}" FontWeight="Bold" Style="{StaticResource BaseTextBlockStyle}"/>
-                            <TextBlock TextWrapping="NoWrap" Style="{StaticResource BodyTextBlockStyle}">
-                                <Run Text="{Binding Host}"/>:<Run Text="{Binding Port}"/>
-                            </TextBlock>
-                        </StackPanel>
+                        <Grid Margin="20" Width="300">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="24"/>
+                                <RowDefinition Height="24"/>
+                                <RowDefinition Height="24"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="68"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="1"
+                                  Background="{ThemeResource SystemControlBackgroundAccentBrush}"
+                                  Margin="0 0 20 0">
+                                <SymbolIcon Symbol="Play" />
+                            </Grid>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+                                       Text="{Binding Name}" FontWeight="Bold" Style="{StaticResource BaseTextBlockStyle}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1"
+                                       TextWrapping="NoWrap" Style="{ThemeResource BodyTextBlockStyle}"
+                                       Text="{Binding Host}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="1"
+                                       TextWrapping="NoWrap" Style="{ThemeResource BodyTextBlockStyle}"
+                                       Text="{Binding Port}"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                                       TextWrapping="NoWrap" Style="{ThemeResource BodyTextBlockStyle}"
+                                       Text="Status: unknown"/>
+                        </Grid>
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>
