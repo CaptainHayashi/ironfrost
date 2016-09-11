@@ -16,6 +16,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+using Ironfrost.Views;
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace Ironfrost
@@ -31,7 +33,17 @@ namespace Ironfrost
     {
         private bool isPaddingAdded = false;
         // Declare the top level nav items
-        private List<NavMenuItem> navlist = new List<NavMenuItem>();
+        private List<NavMenuItem> navlist = new List<NavMenuItem>(
+            new[]
+            {
+                new NavMenuItem()
+                {
+                    Symbol = Symbol.World,
+                    Label = "Custom Studio",
+                    DestPage = typeof(ConnectPage)
+                }
+            }
+        );
 
         public static MainPage Current = null;
 
