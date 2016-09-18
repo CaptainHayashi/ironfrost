@@ -1,0 +1,23 @@
+﻿<UserControl x:Name="errorControl" x:Class="Ironfrost.Views.ErrorControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="using:Ironfrost"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Rectangle Grid.Column="0" Fill="{ThemeResource SystemControlBackgroundAccentBrush}" />
+        <SymbolIcon Symbol="Important" />
+        <TextBlock Grid.Column="1"
+                   TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Bold>Error</Bold>
+            <LineBreak />
+            <Run Text="{Binding Message, Mode=OneWay, FallbackValue ='Unknown error.'}" />
+        </TextBlock>
+    </Grid>
+</UserControl>

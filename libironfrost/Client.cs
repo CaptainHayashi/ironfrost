@@ -8,6 +8,7 @@ namespace Ironfrost
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Threading.Tasks;
+    using System.Net.Sockets;
 
     /// <summary>
     ///     A high-level client.
@@ -94,13 +95,27 @@ namespace Ironfrost
 
             try
             {
-                socket = new TCPClientSocket(host, port, tok);
+                var client = new TcpClient(AddressFamily.InterNetwork);
+                var t = client.ConnectAsync(host, port);
+                t.Wait();
+
+                socket = new TCPClientSocket($"{host}:{port}", client, tok);
                 role = new InitialClientRole();
             }
-            catch (System.Net.Sockets.SocketException e)
+            catch (SocketException e)
             {
                 socket = new NullClientSocket();
                 role = new ErrorClientRole(ClientError.CannotConnect, e.Message);
+            }
+            catch (System.AggregateException e)
+            {
+                socket = new NullClientSocket();
+
+                var msgs = new List<string>();
+                foreach (var x in e.InnerExceptions) msgs.Add(x.Message);
+                var msg = string.Join("; ", msgs);
+
+                role = new ErrorClientRole(ClientError.CannotConnect, msg);
             }
 
             return new Client(socket, role);

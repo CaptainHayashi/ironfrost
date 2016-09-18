@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Sockets;
 
 namespace Ironfrost
 {
@@ -34,18 +35,18 @@ namespace Ironfrost
         /// </summary>
         public event Tokeniser.LineHandler LineEvent;
 
-        private System.Net.Sockets.TcpClient client;
-        private System.Net.Sockets.NetworkStream stream;
+        private TcpClient client;
+        private NetworkStream stream;
         private byte[] buffer;
         private Tokeniser tok;
 
-        public TCPClientSocket(string host, ushort port, Tokeniser tok)
+        public TCPClientSocket(string name, TcpClient client, Tokeniser tok)
         {
-            Name = $"{host}:{port}";
-
-            client = new System.Net.Sockets.TcpClient(host, port);
+            Name = name;
+            this.client = client;
             stream = client.GetStream();
             buffer = new byte[InputBufferSize];
+
             this.tok = tok;
             this.tok.LineEvent += GotLine;
         }

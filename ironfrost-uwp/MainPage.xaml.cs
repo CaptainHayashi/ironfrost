@@ -1,19 +1,13 @@
 ﻿using Ironfrost.Controls;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 using Ironfrost.Views;
@@ -38,8 +32,8 @@ namespace Ironfrost
             {
                 new NavMenuItem()
                 {
-                    Symbol = Symbol.World,
-                    Label = "Custom Studio",
+                    Symbol = Symbol.Link,
+                    Label = "Connect to Studio",
                     DestPage = typeof(ConnectPage)
                 }
             }
